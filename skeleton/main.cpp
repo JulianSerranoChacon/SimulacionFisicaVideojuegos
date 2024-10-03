@@ -10,6 +10,9 @@
 
 #include <iostream>
 
+//clases propias
+#include "MyScene.h"
+
 std::string display_text = "This is a test";
 
 
@@ -29,6 +32,7 @@ PxPvd*                  gPvd        = NULL;
 PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
+MyScene* mScene = nullptr;
 
 
 // Initialize physics engine
@@ -54,6 +58,8 @@ void initPhysics(bool interactive)
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
+
+	mScene = new MyScene();
 	}
 
 
@@ -84,6 +90,7 @@ void cleanupPhysics(bool interactive)
 	transport->release();
 	
 	gFoundation->release();
+	delete mScene;
 	}
 
 // Function called when a key is pressed

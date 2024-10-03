@@ -13,6 +13,9 @@
     <ClCompile Include="MyScene.cpp">
       <Filter>Clases propias</Filter>
     </ClCompile>
+    <ClCompile Include="Vector3D.cpp">
+      <Filter>Clases propias</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -25,6 +28,9 @@
     <ClInclude Include="RenderUtils.hpp" />
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="MyScene.h">
+      <Filter>Clases propias</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3D.h">
       <Filter>Clases propias</Filter>
     </ClInclude>
   </ItemGroup>

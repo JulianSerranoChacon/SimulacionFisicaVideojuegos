@@ -26,6 +26,37 @@ public:
 		return Vector3D(x_ * v.getX(), y_ * v.getY(), z_ * v.getZ());
 	}
 
+	Vector3D scalar(T k) const {
+		return Vector3D(x_ * k, y_ * k, z_ * k); 
+	}
+
+	Vector3D& operator = (const Vector3D& v){
+		x_ = v.x_;
+		y_ = v.y_;
+		z_ = v.z_;
+		return *this;
+	}
+
+	Vector3D& operator += (const Vector3D& v) {
+		x_ += v.x_;
+		y_ += v.y_;
+		z_ += v.z_;
+		return *this;
+	}
+
+	friend Vector3D& operator + (const Vector3D& v1, const Vector3D& v2) {
+		return *(new Vector3D(v1.x_ + v2.x_, v1.y_ + v2.y_, v1.z_ + v2.z_));
+	}
+
+
+	friend Vector3D& operator - (const Vector3D& v1, const Vector3D& v2) {
+		return *(new Vector3D(v1.x_ - v2.x_, v1.y_ - v2.y_, v1.z_ - v2.z_));
+	}
+
+	friend Vector3D& operator * (const Vector3D& v1, const Vector3D& v2) {
+		return *(new Vector3D(v1.y_ * v2.z_ - v1.z_ * v2.y_, v1.z_ * v2.x_ - v1.x_ * v2.z_, v1.x_ * v2.y_ - v1.y_ * v2.x_));
+	}
+
 protected:
 	T x_;
 	T y_;

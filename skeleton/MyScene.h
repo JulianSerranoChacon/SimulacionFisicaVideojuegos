@@ -9,6 +9,7 @@ public:
 	MyScene();
 	~MyScene();
 private:
+	void createAxis();
 	std::vector<RenderItem*> mItems;
 };
 

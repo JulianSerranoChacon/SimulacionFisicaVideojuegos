@@ -1,5 +1,6 @@
 #pragma once
 #include <type_traits>
+#include <PxPhysicsAPI.h>
 #include <math.h>
 
 template <typename T, typename = typename std::enable_if<std::is_floating_point<T>::value>::type>
@@ -55,6 +56,10 @@ public:
 
 	friend Vector3D& operator * (const Vector3D& v1, const Vector3D& v2) {
 		return *(new Vector3D(v1.y_ * v2.z_ - v1.z_ * v2.y_, v1.z_ * v2.x_ - v1.x_ * v2.z_, v1.x_ * v2.y_ - v1.y_ * v2.x_));
+	}
+
+	physx::PxVec3 toVector3() {
+		return physx::PxVec3(x_, y_, z_);
 	}
 
 protected:

@@ -16,6 +16,9 @@
     <ClCompile Include="Vector3D.cpp">
       <Filter>Clases propias</Filter>
     </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Clases propias</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -31,6 +34,9 @@
       <Filter>Clases propias</Filter>
     </ClInclude>
     <ClInclude Include="Vector3D.h">
+      <Filter>Clases propias</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
       <Filter>Clases propias</Filter>
     </ClInclude>
   </ItemGroup>

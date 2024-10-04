@@ -72,6 +72,7 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
+	mScene->update(t);
 }
 
 // Function to clean data

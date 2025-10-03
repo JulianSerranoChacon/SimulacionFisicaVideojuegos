@@ -1,24 +1,34 @@
 #include "MyScene.h"
 #include "Vector3D.h"
+#include "Particle.h"
 
 using namespace physx;
 
 myScene::myScene()
 {
 	createAxis();
-	PxShape* s = CreateShape(PxSphereGeometry(5));
-	PxTransform* str = new PxTransform(Vector3(0, 0, 0));
-	Vector4 sv = Vector4(1, 1, 1, 1);
-	RenderItem* sphere = new RenderItem(s, str, sv);
-	mItems.push_back(sphere);
+	chooseScene(1);
 }
 
 myScene::~myScene()
 {
+	for (int i = 0; i < mParticles.size(); i++)
+	{
+		if (mParticles[i] != nullptr)
+			delete mParticles[i];
+	}
 	for (int i = 0; i < mItems.size(); i++) {
 		if (mItems[i] != nullptr)
 			mItems[i]->release();
 	}
+
+}
+
+void myScene::update(float t)
+{
+	for (int i = 0; i < mParticles.size(); i++)
+		if (mParticles[i] != nullptr)
+			mParticles[i]->integrate(t);
 }
 
 void myScene::createAxis()
@@ -43,4 +53,33 @@ void myScene::createAxis()
 	Vector4 svB = Vector4(0, 0, 1, 1);
 	RenderItem* sphereB = new RenderItem(sB, strB, svB);
 	mItems.push_back(sphereB);
+}
+
+void myScene::chooseScene(int id)
+{
+	switch (id)
+	{
+	case 0:
+		scene0();
+		break;
+	case 1:
+		scene1();
+		break;
+	default:
+		break;
+	}
+}
+
+void myScene::scene0()
+{
+	PxShape* s = CreateShape(PxSphereGeometry(5));
+	PxTransform* str = new PxTransform(Vector3(0, 0, 0));
+	Vector4 sv = Vector4(1, 1, 1, 1);
+	RenderItem* sphere = new RenderItem(s, str, sv);
+	mItems.push_back(sphere);
+}
+
+void myScene::scene1()
+{
+	mParticles.push_back(new Particle(Vector3D<float>(0, 0, 0), Vector3D<float>(10, 0, 0)));
 }

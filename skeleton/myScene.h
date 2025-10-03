@@ -4,12 +4,20 @@
 #include "RenderUtils.hpp"
 #include <vector>
 
+class Particle;
+
 class myScene
 {
 public:
 	myScene();
 	~myScene();
+
+	void update(float t);
 private:
 	void createAxis();
+	void chooseScene(int id);
+	void scene0();
+	void scene1();
 	std::vector<RenderItem*> mItems;
+	std::vector<Particle*> mParticles;
 };

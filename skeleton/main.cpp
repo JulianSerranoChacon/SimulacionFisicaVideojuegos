@@ -58,7 +58,7 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	myScene* mScene = new myScene();
+	mScene = new myScene();
 	}
 
 
@@ -71,6 +71,8 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
+
+	mScene->update(t);
 }
 
 // Function to clean data

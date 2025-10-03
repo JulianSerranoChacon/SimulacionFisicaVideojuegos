@@ -1,6 +1,8 @@
+
 #include "Particle.h"
 
-Particle::Particle(MVector3 Pos, MVector3 vel) : vel_(vel), pose_(Pos.getX(), Pos.getY(), Pos.getZ())
+Particle::Particle(MVector3 Pos, MVector3 vel, MVector3 accel, float dumping) : vel_(vel), accel_(accel), dumping_(dumping),
+pose_(Pos.getX(), Pos.getY(), Pos.getZ())
 {
 	physx::PxShape* s = CreateShape(physx::PxSphereGeometry(5));
 	Vector4 sv = Vector4(1, 1, 1, 1);
@@ -9,10 +11,17 @@ Particle::Particle(MVector3 Pos, MVector3 vel) : vel_(vel), pose_(Pos.getX(), Po
 
 Particle::~Particle()
 {
-	//renderItem_->release();
+	renderItem_->release();
 }
 
 void Particle::integrate(double t)
 {
-	pose_.p = pose_.p + vel_.toVector3() * t;
+	accel(t);
+	pose_.p = pose_.p + (vel_.toVector3() * t) * pow(dumping_, t);
+	//comit con damping para la etiqueta del apartado
+}
+
+void Particle::accel(double t)
+{
+	vel_ = vel_ + accel_.scalar(t);
 }

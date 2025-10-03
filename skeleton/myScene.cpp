@@ -81,5 +81,5 @@ void myScene::scene0()
 
 void myScene::scene1()
 {
-	mParticles.push_back(new Particle(Vector3D<float>(0, 0, 0), Vector3D<float>(10, 0, 0)));
+	mParticles.push_back(new Particle(Vector3D<float>(0, 0, 0), Vector3D<float>(2, 0, 0), Vector3D<float>(0, 5, 5), 0.2));
 }

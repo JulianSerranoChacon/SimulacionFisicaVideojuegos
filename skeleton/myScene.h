@@ -13,11 +13,14 @@ public:
 	~myScene();
 
 	void update(float t);
+
+	void Shoot();
 private:
 	void createAxis();
 	void chooseScene(int id);
 	void scene0();
 	void scene1();
+	void scene2();
 	std::vector<RenderItem*> mItems;
 	std::vector<Particle*> mParticles;
 };

@@ -1,25 +1,30 @@
 #include "MyScene.h"
 #include "Vector3D.h"
 #include "Particle.h"
+#include "Proyectil.h"
 
 using namespace physx;
 
 myScene::myScene()
 {
 	createAxis();
-	chooseScene(1);
+	chooseScene(2);
 }
 
 myScene::~myScene()
 {
 	for (int i = 0; i < mParticles.size(); i++)
 	{
-		if (mParticles[i] != nullptr)
+		if (mParticles[i] != nullptr) {
 			delete mParticles[i];
+			mParticles[i] = nullptr;
+		}
 	}
 	for (int i = 0; i < mItems.size(); i++) {
-		if (mItems[i] != nullptr)
-			mItems[i]->release();
+		if (mItems[i] != nullptr) {
+			DeregisterRenderItem(mItems[i]);
+			mItems[i] = nullptr;
+		}
 	}
 
 }
@@ -31,27 +36,29 @@ void myScene::update(float t)
 			mParticles[i]->integrate(t);
 }
 
+void myScene::Shoot()
+{
+	mParticles.push_back(new Proyectil(Vector3D<float>(0, 0, 0), Vector3D<float>(250, 0, 0), Vector3D<float>(0, 0, 0), 0.2, 20, 9.8, Vector3D<float>(100,0 , 0)));
+}
+
 void myScene::createAxis()
 {
 	Vector3D<float> vR(20, 0, 0);
-	PxShape* sR = CreateShape(PxSphereGeometry(5));
 	PxTransform* strR = new PxTransform(vR.toVector3());
 	Vector4 svR = Vector4(1, 0, 0, 1);
-	RenderItem* sphereR = new RenderItem(sR, strR, svR);
+	RenderItem* sphereR = new RenderItem(CreateShape(PxSphereGeometry(5)), strR, svR);
 	mItems.push_back(sphereR);
 
 	Vector3D<float> vG(0, 20, 0);
-	PxShape* sG = CreateShape(PxSphereGeometry(5));
 	PxTransform* strG = new PxTransform(vG.toVector3());
 	Vector4 svG = Vector4(0, 1, 0, 1);
-	RenderItem* sphereG = new RenderItem(sG, strG, svG);
+	RenderItem* sphereG = new RenderItem(CreateShape(PxSphereGeometry(5)), strG, svG);
 	mItems.push_back(sphereG);
 
 	Vector3D<float> vB(0, 0, 20);
-	PxShape* sB = CreateShape(PxSphereGeometry(5));
 	PxTransform* strB = new PxTransform(vB.toVector3());
 	Vector4 svB = Vector4(0, 0, 1, 1);
-	RenderItem* sphereB = new RenderItem(sB, strB, svB);
+	RenderItem* sphereB = new RenderItem(CreateShape(PxSphereGeometry(5)), strB, svB);
 	mItems.push_back(sphereB);
 }
 
@@ -64,6 +71,9 @@ void myScene::chooseScene(int id)
 		break;
 	case 1:
 		scene1();
+		break;
+	case 2:
+		scene2();
 		break;
 	default:
 		break;
@@ -82,4 +92,9 @@ void myScene::scene0()
 void myScene::scene1()
 {
 	mParticles.push_back(new Particle(Vector3D<float>(0, 0, 0), Vector3D<float>(2, 0, 0), Vector3D<float>(0, 5, 5), 0.2));
+}
+
+void myScene::scene2()
+{
+	mParticles.push_back(new Proyectil(Vector3D<float>(-30, -30, 0), Vector3D<float>(250, 250, 0), Vector3D<float>(0, 0, 0), 0.2, 2, 9.8, Vector3D<float>(100,100, 0)));
 }

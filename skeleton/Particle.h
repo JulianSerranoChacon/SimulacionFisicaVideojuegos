@@ -1,4 +1,3 @@
-
 #pragma once
 #include <PxPhysicsAPI.h>
 #include "RenderUtils.hpp"
@@ -10,13 +9,13 @@ class Particle
 {
 public:
 	Particle(MVector3 Pos, MVector3 vel, MVector3 accel, float dumping);
-	~Particle();
+	virtual ~Particle();
 
-	void integrate(double t);
+	virtual void integrate(double t);
 
-private:
+protected:
 
-	void accel(double t);
+	virtual void accel(double t);
 
 	MVector3 vel_;
 	MVector3 accel_;

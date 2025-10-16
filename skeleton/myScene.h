@@ -14,7 +14,7 @@ public:
 
 	void update(float t);
 
-	void Shoot();
+	void Shoot(const physx::PxTransform* camera);
 private:
 	void createAxis();
 	void chooseScene(int id);

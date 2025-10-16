@@ -14,7 +14,7 @@ void Proyectil::integrate(double t)
 {
 	appGravity(t);
 	Particle::integrate(t);
-	std::cout << pose_.p.x << "x " << pose_.p.y << "y " << pose_.p.z << "z " << '\n';
+	//std::cout << pose_.p.x << "x " << pose_.p.y << "y " << pose_.p.z << "z " << '\n';
 }
 
 void Proyectil::appGravity(double t)

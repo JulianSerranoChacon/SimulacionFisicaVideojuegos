@@ -104,6 +104,10 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 	//case 'B': break;
 	//case ' ':	break;
+	case'P':
+		std::cout << "A";
+		mScene->Shoot(&camera);
+		break;
 	case ' ':
 	{
 		break;

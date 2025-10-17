@@ -21,7 +21,7 @@ void Proyectil::appGravity(double t)
 {
 	mSim = mReal * pow(vel_.Module() / vSim.Module(), 2);
 	gSim = gReal * pow(vel_.Module() / vSim.Module(), 2);
-	accel_ = accel_ - MVector3(0, mSim * gSim * t, 0);
+	accel_ = accel_ - MVector3(0, gSim, 0);
 
 	vSim = vel_ + accel_.scalar(t);
 	vel_ = vSim;

@@ -14,7 +14,7 @@ public:
 
 	void update(float t);
 
-	void Shoot(const physx::PxTransform* camera);
+	void Shoot(physx::PxVec3 camPos, physx::PxVec3 camDir);
 private:
 	void createAxis();
 	void chooseScene(int id);

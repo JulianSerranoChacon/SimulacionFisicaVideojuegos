@@ -3,10 +3,10 @@
 class ParticleGen: public Particle
 {
 public:
-	ParticleGen();
+	ParticleGen(MVector3 Pos, MVector3 vel, MVector3 accel, float dumping, double maxTimeLife);
 	~ParticleGen();
 
-	bool updateTimeLife();
+	bool updateTimeLife(double t);
 protected:
 	double timeLife;
 	double maxTimeLife;

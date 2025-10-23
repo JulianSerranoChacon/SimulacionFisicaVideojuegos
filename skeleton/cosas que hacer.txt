@@ -1,0 +1,15 @@
+Generador:
+- punto de generación.
+- Diferendes probabilidades (Gausiano y uniforme).
+- velocidad de emisión.
+- posición inicial.
+- rango de posiciones.
+- rango de velocidades. 
+- rango de aceleraciones.
+- color.
+
+Sistema:
+- Lista de generadores.
+
+ParticulasGen:
+- Tiempo de vida.

@@ -36,9 +36,11 @@ void myScene::update(float t)
 			mParticles[i]->integrate(t);
 }
 
-void myScene::Shoot(const physx::PxTransform* camera)
+void myScene::Shoot(physx::PxVec3 camPos, physx::PxVec3 camDir)
 {
-	mParticles.push_back(new Proyectil(Vector3D<float>(camera->p.x,camera->p.y,camera->p.z), Vector3D<float>(250, 0, 0), Vector3D<float>(0, 0, 0), 0.2, 20, 9.8, Vector3D<float>(100, 0, 0)));
+	mParticles.push_back(new Proyectil(Vector3D<float>(camPos.x ,camPos.y,camPos.z), Vector3D<float>(0, 0, 250),
+		Vector3D<float>(0, 0, 0), 0.2, 20, 9.8, 
+		Vector3D<float>(0, 0, 100) * Vector3D<float>(camDir.x / camDir.x, camDir.y / camDir.y, camDir.z / camDir.z)));
 }
 
 void myScene::createAxis()

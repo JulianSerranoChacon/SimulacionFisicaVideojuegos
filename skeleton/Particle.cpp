@@ -15,6 +15,7 @@ Particle::~Particle()
 
 void Particle::integrate(double t)
 {
+
 	accel(t);
 	pose_.p = pose_.p + (vel_.toVector3() * t) * pow(dumping_, t);
 }

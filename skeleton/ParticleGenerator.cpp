@@ -22,7 +22,7 @@ ParticleGenerator::~ParticleGenerator()
 
 void ParticleGenerator::update(double t)
 {
-	if (active && (maxParticles <= 0 || nParticles <= maxParticles))
+	if (active && (maxParticles <= 0 || nParticles < maxParticles))
 		generate(t);
 
 	for (ParticleGen* p : listP) {
@@ -43,6 +43,7 @@ void ParticleGenerator::killParts()
 			delete p;
 			p = nullptr;
 		}
+		nParticles--;
 	}
 	listPtoKill.clear();
 }

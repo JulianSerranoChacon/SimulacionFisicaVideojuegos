@@ -115,6 +115,6 @@ void myScene::scene3()
 	mPSystems.push_back(myPS);
 
 	ParticleGenerator* pG = new NormalGenerator(50, 0.2, mVector3D(0, 0, 0), mVector3D(0, 0, 0), mVector3D(0, 5, 0), mVector3D(3, 3, 3), MVector3(0, 0, 0), MVector3(0, 0, 0), 0,
-		10, 60, true, -0.5, 0.5);
+		10, 60, true, 0.5, 0.5);
 	myPS->addParticleGen(pG);
 }

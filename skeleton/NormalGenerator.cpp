@@ -37,5 +37,6 @@ void NormalGenerator::generate(double t)
 
 		int tm = timeLifeMax;
 		listP.push_front(new ParticleGen(genPos+posVar,genVel+velVar,genAccel+accelVar,0.5,(double)(timeLifeMin + rand()%tm)));
+		nParticles++;
 	}
 }

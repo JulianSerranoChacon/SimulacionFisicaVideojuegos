@@ -5,6 +5,7 @@
 #include <vector>
 
 class Particle;
+class ParticleSystem;
 
 class myScene
 {
@@ -21,6 +22,8 @@ private:
 	void scene0();
 	void scene1();
 	void scene2();
+	void scene3();
 	std::vector<RenderItem*> mItems;
 	std::vector<Particle*> mParticles;
+	std::vector< ParticleSystem*> mPSystems;
 };

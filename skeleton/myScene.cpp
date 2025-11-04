@@ -2,13 +2,15 @@
 #include "Vector3D.h"
 #include "Particle.h"
 #include "Proyectil.h"
+#include "ParticleSystem.h"
+#include "NormalGenerator.h"
 
 using namespace physx;
 
 myScene::myScene()
 {
 	createAxis();
-	chooseScene(2);
+	chooseScene(3);
 }
 
 myScene::~myScene()
@@ -34,6 +36,9 @@ void myScene::update(float t)
 	for (int i = 0; i < mParticles.size(); i++)
 		if (mParticles[i] != nullptr)
 			mParticles[i]->integrate(t);
+
+	for (ParticleSystem* pS : mPSystems)
+		pS->update(t);
 }
 
 void myScene::Shoot(physx::PxVec3 camPos, physx::PxVec3 camDir)
@@ -77,6 +82,9 @@ void myScene::chooseScene(int id)
 	case 2:
 		scene2();
 		break;
+	case 3:
+		scene3();
+		break;
 	default:
 		break;
 	}
@@ -99,4 +107,14 @@ void myScene::scene1()
 void myScene::scene2()
 {
 	mParticles.push_back(new Proyectil(Vector3D<float>(-30, -30, 0), Vector3D<float>(250, 250, 0), Vector3D<float>(0, 0, 0), 0.2, 2, 9.8, Vector3D<float>(100,100, 0)));
+}
+
+void myScene::scene3()
+{
+	ParticleSystem* myPS = new ParticleSystem();
+	mPSystems.push_back(myPS);
+
+	ParticleGenerator* pG = new NormalGenerator(50, 0.2, mVector3D(0, 0, 0), mVector3D(0, 0, 0), mVector3D(0, 5, 0), mVector3D(3, 3, 3), MVector3(0, 0, 0), MVector3(0, 0, 0), 0,
+		10, 60, true, -0.5, 0.5);
+	myPS->addParticleGen(pG);
 }

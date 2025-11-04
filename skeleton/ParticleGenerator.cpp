@@ -2,7 +2,7 @@
 #include "ParticleGen.h"
 
 
-Generator::Generator(int maxParticles, double emisionVel, mVector3D genPos, mVector3D genPosOffset,mVector3D genVel, mVector3D genVelOffset, mVector3D genAccel,
+ParticleGenerator::ParticleGenerator(int maxParticles, double emisionVel, mVector3D genPos, mVector3D genPosOffset,mVector3D genVel, mVector3D genVelOffset, mVector3D genAccel,
 	mVector3D genAccelOffset,double timeLifeMin, double timeLifeMax, double maxDistance, bool active): maxParticles(maxParticles), emisionVel(0), iniEmisionVel(emisionVel),
 	genPos(genPos), genPosOffset(genPosOffset),genVel(genVel),genVelOffset(genVelOffset),genAccel(genAccel), genAccelOffset(genAccelOffset),
 	timeLifeMin(timeLifeMin), timeLifeMax(timeLifeMax), maxDistance(maxDistance), active(active), nParticles(0)
@@ -11,7 +11,7 @@ Generator::Generator(int maxParticles, double emisionVel, mVector3D genPos, mVec
 	listPtoKill = std::list<ParticleGen*>();
 }
 
-Generator::~Generator()
+ParticleGenerator::~ParticleGenerator()
 {
 	for (ParticleGen* p : listP) {
 		delete p;
@@ -20,10 +20,10 @@ Generator::~Generator()
 	listP.clear();
 }
 
-void Generator::update(double t)
+void ParticleGenerator::update(double t)
 {
 	if (active && (maxParticles <= 0 || nParticles <= maxParticles))
-		generate();
+		generate(t);
 
 	for (ParticleGen* p : listP) {
 		if (p->updateTimeLife(t))
@@ -31,9 +31,11 @@ void Generator::update(double t)
 		else
 			listPtoKill.emplace_back(p);
 	}
+
+	killParts();
 }
 
-void Generator::killParts(ParticleGen* particula)
+void ParticleGenerator::killParts()
 {
 	for (ParticleGen* p : listPtoKill) {
 		listP.remove(p);

@@ -63,13 +63,13 @@ void myScene::Shoot(physx::PxVec3 camPos, physx::PxVec3 camDir)
 
 	// Creamos el proyectil
 	mParticles.push_back(new Proyectil(
-		Vector3D<float>(camPos.x, camPos.y, camPos.z),  // posición inicial
-		initialVelocity,                                // velocidad inicial (hacia donde mira la cámara)
-		Vector3D<float>(0, 0, 0),                       // aceleración inicial
+		Vector3D<float>(camPos.x, camPos.y, camPos.z),  // posicion inicial
+		initialVelocity,                                // velocidad inicial (hacia donde mira la camara)
+		Vector3D<float>(0, 0, 0),                       // aceleracion inicial
 		0.2f,                                           // damping
 		20.0f,                                          // masa
 		9.8f,                                           // gravedad
-		Vector3D<float>(0, 0, 100)                      // tamaño u otro parámetro tuyo
+		Vector3D<float>(0, 0, 100)                      // tamano u otro parametro tuyo
 	));
 	mParticles.push_back(mCar->shoot());
 }

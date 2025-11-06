@@ -6,10 +6,6 @@ ParticleSystem::ParticleSystem()
 
 ParticleSystem::~ParticleSystem()
 {
-	for(ParticleGenerator* pG : mPGs) {
-		delete pG;
-	}
-	mPGs.clear();
 }
 
 void ParticleSystem::addParticleGen(ParticleGenerator* pG)

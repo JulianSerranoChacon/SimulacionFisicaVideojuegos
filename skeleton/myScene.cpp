@@ -35,7 +35,18 @@ myScene::~myScene()
 			mItems[i] = nullptr;
 		}
 	}
-
+	for (auto e : mPSystems) 
+	{
+		if (e.second != nullptr)
+			delete e.second;
+		e.second = nullptr;
+	}
+	for (auto e : mFG)
+	{
+		if (e.second != nullptr)
+			delete e.second;
+		e.second = nullptr;
+	}
 }
 
 void myScene::update(float t)

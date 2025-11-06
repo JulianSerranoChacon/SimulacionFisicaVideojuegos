@@ -5,7 +5,7 @@ class ParticleSystem
 {
 public:
 	ParticleSystem();
-	~ParticleSystem();
+	virtual ~ParticleSystem();
 	void addParticleGen(ParticleGenerator* pG);
 	void removeParticleGen(ParticleGenerator* pG);
 	void update(double t);

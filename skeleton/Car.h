@@ -7,6 +7,7 @@ class Car : public ParticleWithMass
 {
 public:
 	Car(MVector3 pos, MVector3 moveDir, double speed, float dumping, float mass, float timeLife, float sizeX, float sizeY, float sizeZ, Vector4 sV);
+	~Car();
 	inline virtual void setForceToAply(mVector3D f) {for (ForceGenerator* fg : fG) if (fg != nullptr)fg->setForceToAply(f);}
 	virtual Proyectil* shoot();
 	virtual void integrate(double t) override;

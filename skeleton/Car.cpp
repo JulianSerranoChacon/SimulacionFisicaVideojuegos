@@ -6,6 +6,10 @@ Car::Car(MVector3 pos, MVector3 moveDir, double speed, float dumping, float mass
 {
 }
 
+Car::~Car()
+{
+}
+
 Proyectil* Car::shoot()
 {
     return new Proyectil(Vector3D<float>(pose_.p.x, pose_.p.y, pose_.p.z), Vector3D<float>(0, 0, 250),

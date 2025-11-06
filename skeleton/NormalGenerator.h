@@ -9,7 +9,7 @@ public:
 		double timeLifeMin, double timeLifeMax, double maxDistance, bool active, double media, double desviacion,Vector4 sV);
 	virtual void generate(double t);
 
-private:
+protected:
 	std::mt19937 random;
 	double media;
 	double desviacion;

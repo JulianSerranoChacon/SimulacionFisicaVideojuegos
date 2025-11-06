@@ -18,6 +18,13 @@
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="NormalGenerator.cpp" />
     <ClCompile Include="uniformGenerator.cpp" />
+    <ClCompile Include="ForceGenerator.cpp" />
+    <ClCompile Include="gravityForceGenerator.cpp" />
+    <ClCompile Include="ParticleWithMass.cpp" />
+    <ClCompile Include="WindForceGenerator.cpp" />
+    <ClCompile Include="VortexForceGenerator.cpp" />
+    <ClCompile Include="NormalGeneratorWithForces.cpp" />
+    <ClCompile Include="uniformGeneratorWithForces.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -38,6 +45,13 @@
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="NormalGenerator.h" />
     <ClInclude Include="uniformGenerator.h" />
+    <ClInclude Include="ForceGenerator.h" />
+    <ClInclude Include="gravityForceGenerator.h" />
+    <ClInclude Include="ParticleWithMass.h" />
+    <ClInclude Include="WindForceGenerator.h" />
+    <ClInclude Include="VortexForceGenerator.h" />
+    <ClInclude Include="NormalGeneratorWithForces.h" />
+    <ClInclude Include="uniformGeneratorWithForces.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

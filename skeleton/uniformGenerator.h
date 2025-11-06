@@ -9,7 +9,7 @@ public:
 		mVector3D genAccel, mVector3D genAccelOffsetMin, mVector3D genAccelOffsetMax,
 		double timeLifeMin, double timeLifeMax, double maxDistance, bool active,Vector4 sV);
 	virtual void generate(double t);
-private:
+protected:
 	std::mt19937 random;
 	mVector3D genPosOffsetMin;
 	mVector3D genVelOffsetMin;

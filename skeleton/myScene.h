@@ -23,6 +23,7 @@ private:
 	void scene1();
 	void scene2();
 	void scene3();
+	void scene4();
 	std::vector<RenderItem*> mItems;
 	std::vector<Particle*> mParticles;
 	std::vector< ParticleSystem*> mPSystems;

@@ -26,6 +26,7 @@
     <ClCompile Include="NormalGeneratorWithForces.cpp" />
     <ClCompile Include="uniformGeneratorWithForces.cpp" />
     <ClCompile Include="Car.cpp" />
+    <ClCompile Include="Ball.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -54,6 +55,7 @@
     <ClInclude Include="NormalGeneratorWithForces.h" />
     <ClInclude Include="uniformGeneratorWithForces.h" />
     <ClInclude Include="Car.h" />
+    <ClInclude Include="Ball.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

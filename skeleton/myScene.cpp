@@ -44,8 +44,8 @@ void myScene::update(float t)
 		if (mParticles[i] != nullptr)
 			mParticles[i]->integrate(t);
 
-	for (ParticleSystem* pS : mPSystems)
-		pS->update(t);
+	for (auto pS : mPSystems)
+		pS.second->update(t);
 }
 
 void myScene::Shoot(physx::PxVec3 camPos, physx::PxVec3 camDir)
@@ -148,7 +148,7 @@ void myScene::scene2()
 void myScene::scene3()
 {
 	ParticleSystem* myPS = new ParticleSystem();
-	mPSystems.push_back(myPS);
+	mPSystems.emplace("scene3Sys",myPS);
 
 	//fuego
 	ParticleGenerator* pG = new NormalGenerator(
@@ -215,7 +215,7 @@ void myScene::scene3()
 void myScene::scene4()
 {
 	ParticleSystem* myPS = new ParticleSystem();
-	mPSystems.push_back(myPS);
+	mPSystems.emplace("scene4Sys",myPS);
 
 	gravityForceGenerator* gG = new gravityForceGenerator(mVector3D(0, -9.8, 0));
 	WindForceGenerator* wG = new WindForceGenerator(mVector3D(5,5,0 ), 0.8f);
@@ -291,10 +291,15 @@ void myScene::scene4()
 
 void myScene::gameScene()
 {
-
+	gravityForceGenerator* gG = new gravityForceGenerator(mVector3D(0, -9.8, 0));
 	WindForceGenerator* wG = new WindForceGenerator(mVector3D(5, 5, 0), 0.8f);
+	VortexForceGenerator* vG = new VortexForceGenerator(mVector3D(30, 30, 30), 0.02, 0.1, 2);
+	mFG.emplace("gravedad", gG);
+	mFG.emplace("viento", wG);
+	mFG.emplace("vortex", vG);
+
 	ParticleSystem* myPS = new ParticleSystem();
-	mPSystems.push_back(myPS);
+	mPSystems.emplace("fuegoCoche", myPS);
 	//fuego
 	NormalGeneratorWithForces* pG = new NormalGeneratorWithForces(
 		300, 0.003,                      // numero particulas, velocidad de emision
@@ -311,12 +316,62 @@ void myScene::gameScene()
 		Vector4(1, 0.5, 0, 1)           // color
 	);
 	myPS->addParticleGen(pG);
-
-	gravityForceGenerator* gG = new gravityForceGenerator(mVector3D(0, 0, 0));
+	myPS->setActive(false);
 	mCar = new Car(MVector3(0, 0, 0), MVector3(0, 0, 0), 40, 0.5, 30, -1, 5, 3, 4, Vector4(0.0, 0.0, 1.0, 1.0));
-	mCar->addForceGenerator(gG);
-	gG->setActive(false);
 	pG->addForceGenerator(wG);
 	mCar->setPS(myPS);
 	mParticles.push_back(mCar);
+}
+
+void myScene::toggleTurbo()
+{
+	mCar->setPSActive(!mCar->isPSActive());
+}
+
+void myScene::iniLLuvia()
+{
+	ParticleSystem* myPS = new ParticleSystem();
+	mPSystems.emplace("lluvia", myPS);
+	// Generador de lluvia
+	uniformGeneratorWithForces* pG = new uniformGeneratorWithForces(
+		100,                  // Ma ximo de particulas
+		0.07,                 // Tiempo entre emisiones
+		mVector3D(0, 30, 0),    // Posicion del generador (altura)
+		MVector3(0, 0, 0),      // Offset minimo de posicion
+		mVector3D(60, 0, 60),   // Offset maximo de posicion (ancho y profundidad del cuadrado)
+		MVector3(0, -25, 0),    // Velocidad
+		MVector3(0, -2, 0),     // Offset minimo de la velocidad 
+		MVector3(0, 0, 0),      // Offset maximo de la velocidad a
+		MVector3(0, 0, 0),      // Aceleracion
+		MVector3(0, 0, 0),      // Offset minimo de la aceleracion
+		MVector3(0, 0, 0),      // Offset maximo de la maxima
+		1,                  // Tiempo de vida minimo
+		2,                  // Tiempo de vida maximo
+		50.0,                 // Distancia maxima
+		true,                 // Activo
+		50,						//masa
+		Vector4(0.6, 0.7, 1.0, 1) // Color azul
+	);
+	if (mFG.count("gravedad")) {
+		pG->addForceGenerator(mFG.at("gravedad"));
+		mFG.at("gravedad")->setActive(false);
+	}
+	if (mFG.count("viento")) {
+		pG->addForceGenerator(mFG.at("viento"));
+		mFG.at("viento")->setActive(false);
+	}
+
+	myPS->addParticleGen(pG);
+}
+
+void myScene::stopMPSystems(std::string s)
+{
+	if (mPSystems.count(s))
+		mPSystems[s]->setActive(!mPSystems[s]->getActive());
+}
+
+void myScene::toggleMFG(std::string s)
+{
+	if (mFG.count(s))
+		mFG[s]->setActive(!mFG[s]->getActive());
 }

@@ -3,10 +3,12 @@
 #include "core.hpp"
 #include "RenderUtils.hpp"
 #include <vector>
+#include <map>
 
 class Particle;
 class ParticleSystem;
 class Car;
+class ForceGenerator;
 class myScene
 {
 public:
@@ -17,6 +19,10 @@ public:
 
 	void Shoot(physx::PxVec3 camPos, physx::PxVec3 camDir);
 	void moveCar(Vector3 moveDir);
+	void toggleTurbo();
+	void iniLLuvia();
+	void stopMPSystems(std::string s);
+	void toggleMFG(std::string s);
 private:
 	void createAxis();
 	void chooseScene(int id);
@@ -28,6 +34,7 @@ private:
 	void gameScene();
 	std::vector<RenderItem*> mItems;
 	std::vector<Particle*> mParticles;
-	std::vector< ParticleSystem*> mPSystems;
+	std::map<std::string, ParticleSystem*> mPSystems;
+	std::map<std::string, ForceGenerator*> mFG;
 	Car* mCar;
 };

@@ -8,7 +8,7 @@ class ForceGenerator
 public:
 	ForceGenerator(mVector3D force);
 	virtual ~ForceGenerator();
-	inline virtual void setActive(bool active) { active = active; }
+	inline virtual void setActive(bool a) { active = a; }
 	inline virtual bool getActive() { return active; }
 	virtual void addForce(ParticleWithMass* p) = 0;
 	inline virtual void setForceToAply(mVector3D f) { forceToAply = f; }

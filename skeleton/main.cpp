@@ -120,6 +120,19 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case'J':
 		mScene->moveCar(Vector3(1, 0, 0));
 		break;
+	case'U':
+		mScene->toggleTurbo();
+		break;
+	case'L':
+		mScene->iniLLuvia();
+		break;
+	case'K':
+		mScene->stopMPSystems("lluvia");
+		break;
+	case'O':
+		mScene->toggleMFG("gravedad");
+		mScene->toggleMFG("viento");
+		break;
 	case ' ':
 	{
 		break;

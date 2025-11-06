@@ -12,6 +12,8 @@ public:
 	virtual void integrate(double t) override;
 	virtual void move(Vector3);
 	inline void setPS(ParticleSystem* p) { pS = p; }
+	inline void setPSActive(bool active) { pS->setActive(active); }
+	inline bool isPSActive() { return pS->getActive(); }
 protected:
 	MVector3 moveDir;
 	ParticleSystem* pS = nullptr;

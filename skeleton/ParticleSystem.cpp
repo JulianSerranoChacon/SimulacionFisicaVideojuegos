@@ -38,3 +38,12 @@ void ParticleSystem::moveTo(Vector3 v)
 			pG->moveTo(v);
 	}
 }
+
+void ParticleSystem::setActive(bool a)
+{
+	active = a;
+	for (ParticleGenerator* pG : mPGs) {
+		if (pG != nullptr)
+			pG->setActive(active);
+	}
+}

@@ -3,9 +3,9 @@
 
 
 ParticleGenerator::ParticleGenerator(int maxParticles, double emisionVel, mVector3D genPos, mVector3D genPosOffset,mVector3D genVel, mVector3D genVelOffset, mVector3D genAccel,
-	mVector3D genAccelOffset,double timeLifeMin, double timeLifeMax, double maxDistance, bool active): maxParticles(maxParticles), emisionVel(0), iniEmisionVel(emisionVel),
+	mVector3D genAccelOffset,double timeLifeMin, double timeLifeMax, double maxDistance, bool active, Vector4 sV): maxParticles(maxParticles), emisionVel(0), iniEmisionVel(emisionVel),
 	genPos(genPos), genPosOffset(genPosOffset),genVel(genVel),genVelOffset(genVelOffset),genAccel(genAccel), genAccelOffset(genAccelOffset),
-	timeLifeMin(timeLifeMin), timeLifeMax(timeLifeMax), maxDistance(maxDistance), active(active), nParticles(0)
+	timeLifeMin(timeLifeMin), timeLifeMax(timeLifeMax), maxDistance(maxDistance), active(active), nParticles(0), sV(sV)
 {
 	listP = std::list<ParticleGen*>();
 	listPtoKill = std::list<ParticleGen*>();

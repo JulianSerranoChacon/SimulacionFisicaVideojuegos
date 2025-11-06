@@ -1,6 +1,7 @@
 #pragma once
 #include <list>
 #include "Vector3D.h"
+#include "Particle.h"
 class ParticleGen;
 using mVector3D = Vector3D<float>;
 class ParticleGenerator
@@ -8,7 +9,7 @@ class ParticleGenerator
 public:
 	ParticleGenerator(int maxParticles, double emisionVel, mVector3D genPos, mVector3D genPosOffset, mVector3D genVel, mVector3D genVelOffset,
 		mVector3D genAccel, mVector3D genAccelOffset,
-		double timeLifeMin, double timeLifeMax, double maxDistance, bool active);
+		double timeLifeMin, double timeLifeMax, double maxDistance, bool active, Vector4 sV);
 	virtual ~ParticleGenerator();
 	virtual void update(double t);
 	virtual void generate(double t) = 0;
@@ -31,5 +32,6 @@ protected:
 	double timeLifeMax;
 	double maxDistance;
 	bool active;
+	Vector4 sV;
 };
 

@@ -2,8 +2,8 @@
 #include "ParticleGen.h"
 
 NormalGenerator::NormalGenerator(int maxParticles, double emisionVel, mVector3D genPos, mVector3D genPosOffset, mVector3D genVel, mVector3D genVelOffset,
-	mVector3D genAccel, mVector3D genAccelOffset, double timeLifeMin, double timeLifeMax, double maxDistance, bool active,double media, double desviacion):
-	ParticleGenerator(maxParticles,emisionVel,genPos,genPosOffset,genVel,genVelOffset,genAccel,genAccelOffset,timeLifeMin,timeLifeMax,maxDistance,active), 
+	mVector3D genAccel, mVector3D genAccelOffset, double timeLifeMin, double timeLifeMax, double maxDistance, bool active,double media, double desviacion,Vector4 sV):
+	ParticleGenerator(maxParticles,emisionVel,genPos,genPosOffset,genVel,genVelOffset,genAccel,genAccelOffset,timeLifeMin,timeLifeMax,maxDistance,active,sV), 
 	media(media), desviacion(desviacion)
 {
 	std::random_device randomDevice;
@@ -36,7 +36,7 @@ void NormalGenerator::generate(double t)
 		mVector3D accelVar(genAccelOffset.scalar(vAux));
 
 		int tm = timeLifeMax;
-		listP.push_front(new ParticleGen(genPos+posVar,genVel+velVar,genAccel+accelVar,0.5,(double)(timeLifeMin + rand()%tm)));
+		listP.push_front(new ParticleGen(genPos+posVar,genVel+velVar,genAccel+accelVar,0.5,(double)(timeLifeMin + rand()%tm),sV));
 		nParticles++;
 	}
 }

@@ -4,6 +4,7 @@
 #include "Proyectil.h"
 #include "ParticleSystem.h"
 #include "NormalGenerator.h"
+#include "uniformGenerator.h"
 
 using namespace physx;
 
@@ -114,7 +115,19 @@ void myScene::scene3()
 	ParticleSystem* myPS = new ParticleSystem();
 	mPSystems.push_back(myPS);
 
-	ParticleGenerator* pG = new NormalGenerator(50, 0.2, mVector3D(0, 0, 0), mVector3D(0, 0, 0), mVector3D(0, 5, 0), mVector3D(3, 3, 3), MVector3(0, 0, 0), MVector3(0, 0, 0), 0,
-		10, 60, true, 0.5, 0.5);
+	//fuego
+	ParticleGenerator* pG = new NormalGenerator(50, 0.1, mVector3D(0, 0, 0), mVector3D(0, 10, 0), mVector3D(20, 20, 20), mVector3D(3, 3, 3), MVector3(0, 10, 0), MVector3(0, 0, 0), 0,
+		2, 60, true, 0.5, 0.5,Vector4(1,0,0,1));
+	myPS->addParticleGen(pG);
+
+	//lluvia
+	pG = new uniformGenerator(50,0.3,mVector3D(0,30,0),MVector3(0,0,0),mVector3D(10,0,10),MVector3(0,-10,0), MVector3(0, -10,0), MVector3(0, 12, 0),
+		MVector3(0, 0, 0), MVector3(0, 0, 0), MVector3(0, 0, 0),4,5,10,true,Vector4(0,0,1,1));
+	myPS->addParticleGen(pG);
+
+
+	//humo
+	pG = new uniformGenerator(150, 0.1, mVector3D(0, 30, 0), MVector3(0, 0, 0), mVector3D(0, 0, 0), MVector3(0,0,0), MVector3(-7, -7, -7), MVector3(7, 7,7),
+		MVector3(0, 10, 0), MVector3(-5, -5, -5), MVector3(5, 5, 5), 1, 2, 14, true, Vector4(0.5, 0.5, 0.5, 1));
 	myPS->addParticleGen(pG);
 }

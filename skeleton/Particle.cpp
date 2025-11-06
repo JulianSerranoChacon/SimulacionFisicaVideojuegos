@@ -1,10 +1,9 @@
 #include "Particle.h"
 
-Particle::Particle(MVector3 Pos, MVector3 vel, MVector3 accel, float dumping) : vel_(vel), accel_(accel), dumping_(dumping),
-pose_(Pos.getX(), Pos.getY(), Pos.getZ())
+Particle::Particle(MVector3 Pos, MVector3 vel, MVector3 accel, float dumping, Vector4 sV) : vel_(vel), accel_(accel), dumping_(dumping),
+pose_(Pos.getX(), Pos.getY(), Pos.getZ()), sv(sV)
 {
 	physx::PxShape* s = CreateShape(physx::PxSphereGeometry(5));
-	Vector4 sv = Vector4(1, 1, 1, 1);
 	renderItem_ = new RenderItem(s, &pose_, sv);
 }
 

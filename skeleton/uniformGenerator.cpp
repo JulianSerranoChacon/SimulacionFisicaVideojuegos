@@ -4,8 +4,8 @@
 uniformGenerator::uniformGenerator(int maxParticles, double emisionVel, mVector3D genPos, mVector3D genPosOffsetMin,
 	mVector3D genPosOffsetMax, mVector3D genVel, mVector3D genVelOffsetMin, mVector3D genVelOffsetMax,
 	mVector3D genAccel, mVector3D genAccelOffsetMin, mVector3D genAccelOffsetMax,
-	double timeLifeMin, double timeLifeMax, double maxDistance, bool active) :
-	ParticleGenerator(maxParticles, emisionVel, genPos, genPosOffset, genVel, genVelOffset, genAccel, genAccelOffset, timeLifeMin, timeLifeMax, maxDistance, active),
+	double timeLifeMin, double timeLifeMax, double maxDistance, bool active, Vector4 sV) :
+	ParticleGenerator(maxParticles, emisionVel, genPos, genPosOffsetMax, genVel, genVelOffsetMax, genAccel, genAccelOffsetMax, timeLifeMin, timeLifeMax, maxDistance, active,sV),
 	genPosOffsetMin(genPosOffsetMin),genVelOffsetMin(genVelOffsetMin),genAccelOffsetMin(genAccelOffsetMin)
 {
 	std::random_device randomDevice;
@@ -46,7 +46,7 @@ void uniformGenerator::generate(double t)
 		mVector3D accelVar(genAccelOffset.scalar(vAux));
 
 		std::uniform_real_distribution<double> time(timeLifeMin, timeLifeMax);
-		listP.push_front(new ParticleGen(genPos + posVar, genVel + velVar, genAccel + accelVar, 0.5, time(random)));
+		listP.push_front(new ParticleGen(genPos + posVar, genVel + velVar, genAccel + accelVar, 0.5, time(random),sV));
 		nParticles++;
 	}
 }

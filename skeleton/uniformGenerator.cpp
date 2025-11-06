@@ -18,32 +18,29 @@ void uniformGenerator::generate(double t)
 	if (emisionVel <= 0) {
 		emisionVel = iniEmisionVel;
 		std::uniform_real_distribution<float> uniformXPos(genPosOffsetMin.getX(), genPosOffset.getX());
-		std::uniform_real_distribution<float> uniformYPos(genPosOffsetMin.getX(), genPosOffset.getY());
-		std::uniform_real_distribution<float> uniformZPos(genPosOffsetMin.getX(), genPosOffset.getZ());
+		std::uniform_real_distribution<float> uniformYPos(genPosOffsetMin.getY(), genPosOffset.getY());
+		std::uniform_real_distribution<float> uniformZPos(genPosOffsetMin.getZ(), genPosOffset.getZ());
 
 		float auxX = uniformXPos(random);
 		float auxY = uniformYPos(random);
 		float auxZ = uniformZPos(random);
-		mVector3D vAux(auxX, auxY, auxZ);
-		mVector3D posVar(genPosOffset.scalar(vAux));
+		Vector3D posVar(auxX, auxY, auxZ);
 		
-		std::uniform_real_distribution<float> uniformXVel(genVelOffsetMin.getX(), genPosOffset.getX());
-		std::uniform_real_distribution<float> uniformYVel(genVelOffsetMin.getY(), genPosOffset.getY());
-		std::uniform_real_distribution<float> uniformZVel(genVelOffsetMin.getZ(), genPosOffset.getZ());
+		std::uniform_real_distribution<float> uniformXVel(genVelOffsetMin.getX(), genVelOffset.getX());
+		std::uniform_real_distribution<float> uniformYVel(genVelOffsetMin.getY(), genVelOffset.getY());
+		std::uniform_real_distribution<float> uniformZVel(genVelOffsetMin.getZ(), genVelOffset.getZ());
 		auxX = uniformXVel(random);
 		auxY = uniformYVel(random);
 		auxZ = uniformZVel(random);
-		vAux = mVector3D(auxX, auxY, auxZ);
-		mVector3D velVar(genVelOffset.scalar(vAux));
+		mVector3D velVar(auxX, auxY, auxZ);
 
 		std::uniform_real_distribution<float> uniformXAccel(genAccelOffsetMin.getX(), genAccelOffset.getX());
-		std::uniform_real_distribution<float> uniformYAccel(genAccelOffsetMin.getX(), genAccelOffset.getY());
-		std::uniform_real_distribution<float> uniformZAccel(genAccelOffsetMin.getX(), genAccelOffset.getZ());
+		std::uniform_real_distribution<float> uniformYAccel(genAccelOffsetMin.getY(), genAccelOffset.getY());
+		std::uniform_real_distribution<float> uniformZAccel(genAccelOffsetMin.getZ(), genAccelOffset.getZ());
 		auxX = uniformXAccel(random);
 		auxY = uniformYAccel(random);
 		auxZ = uniformZAccel(random);
-		vAux = mVector3D(auxX, auxY, auxZ);
-		mVector3D accelVar(genAccelOffset.scalar(vAux));
+		mVector3D accelVar(auxX, auxY, auxZ);
 
 		std::uniform_real_distribution<double> time(timeLifeMin, timeLifeMax);
 		listP.push_front(new ParticleGen(genPos + posVar, genVel + velVar, genAccel + accelVar, 0.5, time(random),sV));

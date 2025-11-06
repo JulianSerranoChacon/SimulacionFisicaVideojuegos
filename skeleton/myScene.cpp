@@ -116,18 +116,63 @@ void myScene::scene3()
 	mPSystems.push_back(myPS);
 
 	//fuego
-	ParticleGenerator* pG = new NormalGenerator(50, 0.1, mVector3D(0, 0, 0), mVector3D(0, 10, 0), mVector3D(20, 20, 20), mVector3D(3, 3, 3), MVector3(0, 10, 0), MVector3(0, 0, 0), 0,
-		2, 60, true, 0.5, 0.5,Vector4(1,0,0,1));
+	ParticleGenerator* pG = new NormalGenerator(
+		100, 0.03,                      // numero particulas, velocidad de emision
+		mVector3D(0, 0, 0),             // Posicion
+		mVector3D(1, 0.5, 1),           // Offset de la posicion
+		mVector3D(0, 8, 0),             // velocidad
+		mVector3D(2, 3, 2),             // Offset de la velocidad
+		MVector3(0, 2, 0),              // aceleracion
+		MVector3(0, 1, 0),              // Offset de la aceleracion
+		1, 3, 60,                       // vida minia, maxima y distancia
+		true,							// Active
+		0.0, 0.4,                       // media y desviacion
+		Vector4(1, 0.5, 0, 1)           // color
+	);
 	myPS->addParticleGen(pG);
 
-	//lluvia
-	pG = new uniformGenerator(50,0.3,mVector3D(0,30,0),MVector3(0,0,0),mVector3D(10,0,10),MVector3(0,-10,0), MVector3(0, -10,0), MVector3(0, 12, 0),
-		MVector3(0, 0, 0), MVector3(0, 0, 0), MVector3(0, 0, 0),4,5,10,true,Vector4(0,0,1,1));
+	// Generador de lluvia
+	pG = new uniformGenerator(
+		100,                  // Maximo de particulas
+		0.07,                 // Tiempo entre emisiones
+		mVector3D(0, 30, 0),    // Posicion del generador (altura)
+		MVector3(0, 0, 0),      // Offset minimo de posicion
+		mVector3D(60, 0, 60),   // Offset maximo de posicion (ancho y profundidad del cuadrado)
+		MVector3(0, -25, 0),    // Velocidad
+		MVector3(0, -2, 0),     // Offset minimo de la velocidad 
+		MVector3(0, 0, 0),      // Offset maximo de la velocidad a
+		MVector3(0, 0, 0),      // Aceleracion
+		MVector3(0, 0, 0),      // Offset minimo de la aceleracion
+		MVector3(0, 0, 0),      // Offset maximo de la maxima
+		1,                  // Tiempo de vida minimo
+		2,                  // Tiempo de vida maximo
+		50.0,                 // Distancia maxima
+		true,                 // Activo
+		Vector4(0.6, 0.7, 1.0, 1) // Color azul
+	);
 	myPS->addParticleGen(pG);
+
 
 
 	//humo
-	pG = new uniformGenerator(150, 0.1, mVector3D(0, 30, 0), MVector3(0, 0, 0), mVector3D(0, 0, 0), MVector3(0,0,0), MVector3(-7, -7, -7), MVector3(7, 7,7),
-		MVector3(0, 10, 0), MVector3(-5, -5, -5), MVector3(5, 5, 5), 1, 2, 14, true, Vector4(0.5, 0.5, 0.5, 1));
+	// Generador de humo
+	pG = new uniformGenerator(
+		200,                     // Maximo de particulas
+		0.05,                    // Tiempo entre emisiones
+		mVector3D(30, 30, 30),   // Posicion
+		mVector3D(-5, -5, -5),   // Offset minimo de posicion (cubo alrededor del centro)
+		mVector3D(5, 5, 5),      // Offset maximo de posicion
+		mVector3D(0, 0, 0),      // Velocidad 
+		mVector3D(-1, -1, -1),   // Offset minimo de velocidad (hacia todas direcciones)
+		mVector3D(1, 1, 1),      // Offset maximo de velocidad
+		mVector3D(0, -10, 0),      // Aceleracion
+		mVector3D(0, 0, 0),      // Offset minimo de aceleracion
+		mVector3D(0, 0, 0),      // Offset maximo de aceleracion
+		2,                        // Tiempo de vida minimo
+		4,                        // Tiempo de vida maximo
+		10,                       // Distancia maxima
+		true,                     // Activo
+		Vector4(0.5, 0.5, 0.5, 1) // Color gris
+	);
 	myPS->addParticleGen(pG);
 }

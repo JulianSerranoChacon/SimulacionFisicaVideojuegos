@@ -192,7 +192,7 @@ void myScene::scene4()
 
 	gravityForceGenerator* gG = new gravityForceGenerator(mVector3D(0, -9.8, 0));
 	WindForceGenerator* wG = new WindForceGenerator(mVector3D(5,5,0 ), 0.8f);
-	VortexForceGenerator* vG = new VortexForceGenerator(mVector3D(30, 30, 30), 0.0002f);
+	VortexForceGenerator* vG = new VortexForceGenerator(mVector3D(30, 30, 30), 0.002f);
 
 	//fuego
 	NormalGeneratorWithForces* pG = new NormalGeneratorWithForces(

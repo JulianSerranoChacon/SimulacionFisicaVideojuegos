@@ -16,7 +16,6 @@ using namespace physx;
 
 myScene::myScene()
 {
-	createAxis();
 	//chooseScene(4);
 	gameScene();
 }
@@ -51,9 +50,28 @@ void myScene::update(float t)
 
 void myScene::Shoot(physx::PxVec3 camPos, physx::PxVec3 camDir)
 {
-	mParticles.push_back(new Proyectil(Vector3D<float>(camPos.x ,camPos.y,camPos.z), Vector3D<float>(0, 0, 250),
-		Vector3D<float>(0, 0, 0), 0.2, 20, 9.8, 
-		Vector3D<float>(0, 0, 100) * Vector3D<float>(camDir.x / camDir.x, camDir.y / camDir.y, camDir.z / camDir.z)));
+	// Normalizamos la dirección de la cámara
+	camDir.normalize();
+
+	// Velocidad del proyectil
+	float projectileSpeed = 250.0f;
+
+	// Calculamos la velocidad inicial en dirección de la cámara
+	Vector3D<float> initialVelocity(camDir.x * projectileSpeed,
+		camDir.y * projectileSpeed,
+		camDir.z * projectileSpeed);
+
+	// Creamos el proyectil
+	mParticles.push_back(new Proyectil(
+		Vector3D<float>(camPos.x, camPos.y, camPos.z),  // posición inicial
+		initialVelocity,                                // velocidad inicial (hacia donde mira la cámara)
+		Vector3D<float>(0, 0, 0),                       // aceleración inicial
+		0.2f,                                           // damping
+		20.0f,                                          // masa
+		9.8f,                                           // gravedad
+		Vector3D<float>(0, 0, 100)                      // tamaño u otro parámetro tuyo
+	));
+	mParticles.push_back(mCar->shoot());
 }
 
 void myScene::moveCar(Vector3 moveDir)
@@ -84,6 +102,8 @@ void myScene::createAxis()
 
 void myScene::chooseScene(int id)
 {
+
+	createAxis();
 	switch (id)
 	{
 	case 0:
@@ -271,6 +291,8 @@ void myScene::scene4()
 
 void myScene::gameScene()
 {
+
+	WindForceGenerator* wG = new WindForceGenerator(mVector3D(5, 5, 0), 0.8f);
 	ParticleSystem* myPS = new ParticleSystem();
 	mPSystems.push_back(myPS);
 	//fuego
@@ -294,6 +316,7 @@ void myScene::gameScene()
 	mCar = new Car(MVector3(0, 0, 0), MVector3(0, 0, 0), 40, 0.5, 30, -1, 5, 3, 4, Vector4(0.0, 0.0, 1.0, 1.0));
 	mCar->addForceGenerator(gG);
 	gG->setActive(false);
+	pG->addForceGenerator(wG);
 	mCar->setPS(myPS);
 	mParticles.push_back(mCar);
 }

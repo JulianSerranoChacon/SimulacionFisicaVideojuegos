@@ -1,12 +1,16 @@
 #include "Car.h"
+#include "Proyectil.h"
 
 Car::Car(MVector3 pos, MVector3 moveDir, double speed, float dumping, float mass, float timeLife, float sizeX,float sizeY,float sizeZ, Vector4 sV):
 	ParticleWithMass(pos, MVector3(0,0,0), MVector3(0, 0, 0), dumping, mass, timeLife,size, CreateShape(physx::PxBoxGeometry(sizeX, sizeY, sizeZ)), sv), moveDir(0,0,0), speed(speed)
 {
 }
 
-void Car::shoot()
+Proyectil* Car::shoot()
 {
+    return new Proyectil(Vector3D<float>(pose_.p.x, pose_.p.y, pose_.p.z), Vector3D<float>(0, 0, 250),
+        Vector3D<float>(0, 0, 0), 0.2, 20, 9.8,
+        Vector3D<float>(100, 100, 100) * vel_.normalize() + Vector3D<float>(0, 50,0));
 }
 
 void Car::integrate(double t)

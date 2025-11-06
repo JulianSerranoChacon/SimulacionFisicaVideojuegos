@@ -1,6 +1,6 @@
 #pragma once
 #include <list>
-class ParticleGenerator;
+#include "ParticleGenerator.h"
 class ParticleSystem
 {
 public:
@@ -9,6 +9,7 @@ public:
 	void addParticleGen(ParticleGenerator* pG);
 	void removeParticleGen(ParticleGenerator* pG);
 	void update(double t);
+	void moveTo(Vector3 v);
 private:
 	std::list<ParticleGenerator*> mPGs;
 };

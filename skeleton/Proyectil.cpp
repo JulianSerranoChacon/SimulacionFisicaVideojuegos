@@ -2,7 +2,7 @@
 #include <iostream>
 
 Proyectil::Proyectil(MVector3 pos, MVector3 velR, MVector3 accel, float dumping, float mass, float gravity, MVector3 vS, Vector4 sV)
-	: Particle(pos,velR,accel,dumping,sv), mReal(mass), gReal(gravity), vSim(vS)
+	: Particle(pos,velR,accel,dumping,1.0f,sV), mReal(mass), gReal(gravity), vSim(vS)
 {
 }
 

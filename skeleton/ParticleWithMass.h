@@ -5,7 +5,8 @@
 class ParticleWithMass : public ParticleGen
 {
 public:
-	ParticleWithMass(MVector3 pos, MVector3 velReal, MVector3 accel, float dumping, float mass,float timeLife, Vector4 sV = Vector4(1, 1, 1, 1));
+	ParticleWithMass(MVector3 pos, MVector3 velReal, MVector3 accel, float dumping, float mass,float timeLife,float size, Vector4 sV = Vector4(1, 1, 1, 1));
+	ParticleWithMass(MVector3 pos, MVector3 velReal, MVector3 accel, float dumping, float mass, float timeLife, float size, physx::PxShape* s, Vector4 sV = Vector4(1, 1, 1, 1));
 	virtual ~ParticleWithMass();
 	inline virtual float getMass() { return mass; }
 	inline virtual MVector3 getVel() { return vel_; }

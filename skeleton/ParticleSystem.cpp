@@ -1,5 +1,4 @@
 #include "ParticleSystem.h"
-#include "ParticleGenerator.h"
 ParticleSystem::ParticleSystem()
 {
 	mPGs = std::list<ParticleGenerator*>();
@@ -29,5 +28,13 @@ void ParticleSystem::update(double t)
 {
 	for (ParticleGenerator* pG : mPGs) {
 		pG->update(t);
+	}
+}
+
+void ParticleSystem::moveTo(Vector3 v)
+{
+	for (ParticleGenerator* pG : mPGs) {
+		if(pG != nullptr)
+			pG->moveTo(v);
 	}
 }

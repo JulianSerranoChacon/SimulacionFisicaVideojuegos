@@ -35,6 +35,11 @@ void ParticleGenerator::update(double t)
 	killParts();
 }
 
+void ParticleGenerator::moveTo(Vector3 point)
+{
+	genPos = mVector3D(point.x,point.y,point.z);
+}
+
 void ParticleGenerator::killParts()
 {
 	for (ParticleGen* p : listPtoKill) {

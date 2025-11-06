@@ -35,7 +35,7 @@ void NormalGeneratorWithForces::generate(double t)
 		mVector3D accelVar(genAccelOffset.scalar(vAux));
 
 		int tm = timeLifeMax;
-		ParticleWithMass* p = new ParticleWithMass(genPos + posVar, genVel + velVar, genAccel + accelVar, 0.5, mass, (double)(timeLifeMin + rand() % tm), sV);
+		ParticleWithMass* p = new ParticleWithMass(genPos + posVar, genVel + velVar, genAccel + accelVar, 0.5, mass, (double)(timeLifeMin + rand() % tm),0.5, sV);
 		for (ForceGenerator* f : fG)
 			p->addForceGenerator(f);
 		listP.push_front(p);

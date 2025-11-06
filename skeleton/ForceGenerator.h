@@ -11,6 +11,7 @@ public:
 	inline virtual void setActive(bool active) { active = active; }
 	inline virtual bool getActive() { return active; }
 	virtual void addForce(ParticleWithMass* p) = 0;
+	inline virtual void setForceToAply(mVector3D f) { forceToAply = f; }
 protected:
 	mVector3D forceToAply;
 	bool active;

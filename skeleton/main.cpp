@@ -108,11 +108,25 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		std::cout << "A";
 		mScene->Shoot(GetCamera()->getTransform().p, GetCamera()->getDir());
 		break;
+	case'Y':
+		mScene->moveCar(Vector3(0, 0, 1));
+		break;
+	case'H':
+		mScene->moveCar(Vector3(0, 0, -1));
+		break;
+	case'G':
+		mScene->moveCar(Vector3(-1, 0, 0));
+		break;
+	case'J':
+		mScene->moveCar(Vector3(1, 0, 0));
+		break;
 	case ' ':
 	{
 		break;
 	}
 	default:
+
+		mScene->moveCar(Vector3(0, 0, 0));
 		break;
 	}
 }

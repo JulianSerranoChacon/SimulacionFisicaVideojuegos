@@ -40,7 +40,7 @@ void uniformGeneratorWithForces::generate(double t)
 		mVector3D accelVar(auxX, auxY, auxZ);
 
 		std::uniform_real_distribution<double> time(timeLifeMin, timeLifeMax);
-		ParticleWithMass* p = new ParticleWithMass(genPos + posVar, genVel + velVar, genAccel + accelVar, 0.5, mass, time(random), sV);
+		ParticleWithMass* p = new ParticleWithMass(genPos + posVar, genVel + velVar, genAccel + accelVar, 0.5, mass, time(random),0.5, sV);
 		for (ForceGenerator* f : fG)
 			p->addForceGenerator(f);
 		listP.push_front(p);

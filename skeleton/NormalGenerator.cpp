@@ -36,7 +36,7 @@ void NormalGenerator::generate(double t)
 		mVector3D accelVar(genAccelOffset.scalar(vAux));
 
 		int tm = timeLifeMax;
-		listP.push_front(new ParticleGen(genPos+posVar,genVel+velVar,genAccel+accelVar,0.5,(double)(timeLifeMin + rand()%tm),sV));
+		listP.push_front(new ParticleGen(genPos+posVar,genVel+velVar,genAccel+accelVar,0.5,(double)(timeLifeMin + rand()%tm),0.5,sV));
 		nParticles++;
 	}
 }

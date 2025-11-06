@@ -14,6 +14,7 @@ public:
 	virtual void update(double t);
 	virtual void generate(double t) = 0;
 	inline virtual void setActive(bool Active) { active = Active; }
+	void moveTo(Vector3 point);
 protected:
 	virtual void killParts();
 	int maxParticles;

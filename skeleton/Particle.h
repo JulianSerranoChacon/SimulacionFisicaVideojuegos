@@ -8,7 +8,8 @@ using MVector3 = Vector3D<float>;
 class Particle
 {
 public:
-	Particle(MVector3 Pos, MVector3 vel, MVector3 accel, float dumping, Vector4 sV = Vector4(1,1,1,1));
+	Particle(MVector3 Pos, MVector3 vel, MVector3 accel, float dumping,float size = 5, Vector4 sV = Vector4(1,1,1,1));
+	Particle(MVector3 Pos, MVector3 vel, MVector3 accel, float dumping, float size = 5, physx::PxShape* s = nullptr, Vector4 sV = Vector4(1, 1, 1, 1));
 	virtual ~Particle();
 
 	virtual void integrate(double t);
@@ -23,4 +24,5 @@ protected:
 	RenderItem* renderItem_;
 	float dumping_;
 	Vector4 sv;
+	float size;
 };

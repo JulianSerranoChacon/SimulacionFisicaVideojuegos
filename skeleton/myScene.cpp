@@ -271,9 +271,29 @@ void myScene::scene4()
 
 void myScene::gameScene()
 {
+	ParticleSystem* myPS = new ParticleSystem();
+	mPSystems.push_back(myPS);
+	//fuego
+	NormalGeneratorWithForces* pG = new NormalGeneratorWithForces(
+		300, 0.003,                      // numero particulas, velocidad de emision
+		mVector3D(0, 0, 0),             // Posicion
+		mVector3D(1, 0.5, 1),           // Offset de la posicion
+		mVector3D(0, 0, 8),             // velocidad
+		mVector3D(2, 3, 2),             // Offset de la velocidad
+		MVector3(0, 0, 2),              // aceleracion
+		MVector3(0, 0, 1),              // Offset de la aceleracion
+		1, 3, 60,                       // vida minia, maxima y distancia
+		true,							// Active
+		0.0, 0.4,                       // media y desviacion
+		50,								//masa
+		Vector4(1, 0.5, 0, 1)           // color
+	);
+	myPS->addParticleGen(pG);
+
 	gravityForceGenerator* gG = new gravityForceGenerator(mVector3D(0, 0, 0));
 	mCar = new Car(MVector3(0, 0, 0), MVector3(0, 0, 0), 40, 0.5, 30, -1, 5, 3, 4, Vector4(0.0, 0.0, 1.0, 1.0));
 	mCar->addForceGenerator(gG);
 	gG->setActive(false);
+	mCar->setPS(myPS);
 	mParticles.push_back(mCar);
 }

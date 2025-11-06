@@ -271,6 +271,9 @@ void myScene::scene4()
 
 void myScene::gameScene()
 {
-	mCar = new Car(MVector3(0, 0, 0), MVector3(0, 0, 0), 10, 0.5, 30, -1, 5, 3, 4, Vector4(0.0, 0.0, 1.0, 1.0));
+	gravityForceGenerator* gG = new gravityForceGenerator(mVector3D(0, 0, 0));
+	mCar = new Car(MVector3(0, 0, 0), MVector3(0, 0, 0), 40, 0.5, 30, -1, 5, 3, 4, Vector4(0.0, 0.0, 1.0, 1.0));
+	mCar->addForceGenerator(gG);
+	gG->setActive(false);
 	mParticles.push_back(mCar);
 }

@@ -15,11 +15,24 @@ void Car::integrate(double t)
 	ParticleWithMass::integrate(t);
 	if (pS != nullptr)
 		pS->moveTo(pose_.p - Vector3(size/2,0, size / 2));
+
 }
 
-void Car::move(Vector3 v)
-{
-	moveDir = Vector3D(v.x,v.y,v.z);
-	if(pS != nullptr)
-		pS->moveTo(v);
-}
+
+    void Car::move(Vector3 dir)
+    {
+        // Dirección deseada (normalizada)
+        mVector3D desiredDir(dir.x, dir.y, dir.z);
+        desiredDir.normalize();
+
+        // Velocidad deseada
+        mVector3D desiredVel = desiredDir.scalar(speed);
+
+        // Interpolamos suavemente la velocidad actual hacia la deseada
+        // (ajusta el factor 0.1f para más o menos suavidad)
+    // Interpolación (ajusta el factor 0.1f para más/menos suavidad)
+        vel_ = vel_.scalar(0.9f) + desiredVel.scalar(0.4f);
+
+        // Actualiza la dirección del movimiento
+        moveDir = desiredDir;
+    }

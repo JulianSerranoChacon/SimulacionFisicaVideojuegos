@@ -1,6 +1,7 @@
 #pragma once
 #include "ParticleWithMass.h"
 #include "ParticleSystem.h"
+#include "gravityForceGenerator.h"
 class Car : public ParticleWithMass
 {
 public:

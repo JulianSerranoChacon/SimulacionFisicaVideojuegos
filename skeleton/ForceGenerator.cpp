@@ -1,5 +1,9 @@
 #include "ForceGenerator.h"
 
+ForceGenerator::ForceGenerator()
+{
+}
+
 ForceGenerator::ForceGenerator(mVector3D force): forceToAply(force)
 {
 }

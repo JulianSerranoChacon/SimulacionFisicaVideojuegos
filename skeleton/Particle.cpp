@@ -27,5 +27,5 @@ void Particle::integrate(double t)
 
 void Particle::accel(double t)
 {
-	vel_ = vel_ + accel_.scalar(t);
+	vel_ += accel_.scalar(t);
 }

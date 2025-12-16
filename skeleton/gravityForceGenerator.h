@@ -6,7 +6,7 @@ class gravityForceGenerator: public ForceGenerator
 public:
 	gravityForceGenerator(mVector3D force);
 	virtual ~gravityForceGenerator();
-	virtual void addForce(ParticleWithMass* p) override;
+	virtual mVector3D addForce(ParticleWithMass* p) override;
 private:
 };
 

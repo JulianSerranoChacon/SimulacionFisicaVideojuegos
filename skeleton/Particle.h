@@ -14,6 +14,8 @@ public:
 
 	virtual void integrate(double t);
 
+	inline virtual Vector3 getPos() { return pose_.p; }
+
 protected:
 
 	virtual void accel(double t);

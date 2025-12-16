@@ -66,6 +66,14 @@ public:
 		return *(new Vector3D(v1.y_ * v2.z_ - v1.z_ * v2.y_, v1.z_ * v2.x_ - v1.x_ * v2.z_, v1.x_ * v2.y_ - v1.y_ * v2.x_));
 	}
 
+	friend Vector3D& operator * (const Vector3D& v1, T k) {
+		return *(new Vector3D(v1.x_ * k, v1.y_ * k, v1.z_ * k));
+	}
+
+	friend Vector3D& operator / (const Vector3D& v1, T k) {
+		return *(new Vector3D(v1.x_ / k, v1.y_ / k, v1.z_ / k));
+	}
+
 	physx::PxVec3 toVector3() {
 		return physx::PxVec3(x_, y_, z_);
 	}

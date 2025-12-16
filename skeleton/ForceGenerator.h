@@ -6,11 +6,12 @@ class ParticleWithMass;
 class ForceGenerator
 {
 public:
+	ForceGenerator();
 	ForceGenerator(mVector3D force);
 	virtual ~ForceGenerator();
 	inline virtual void setActive(bool a) { active = a; }
 	inline virtual bool getActive() { return active; }
-	virtual void addForce(ParticleWithMass* p) = 0;
+	virtual mVector3D addForce(ParticleWithMass* p) = 0;
 	inline virtual void setForceToAply(mVector3D f) { forceToAply = f; }
 protected:
 	mVector3D forceToAply;

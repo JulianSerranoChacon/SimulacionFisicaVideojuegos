@@ -18,4 +18,5 @@ public:
 protected:
 	std::list<ForceGenerator*> fG;
 	float mass;
+	MVector3 force;
 };

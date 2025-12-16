@@ -10,14 +10,15 @@
 #include "gravityForceGenerator.h"
 #include "WindForceGenerator.h"
 #include "VortexForceGenerator.h"
+#include "SpringForceGenerator.h"
 #include "Car.h"
 
 using namespace physx;
 
 myScene::myScene()
 {
-	//chooseScene(4);
-	gameScene();
+	chooseScene(4);
+	//gameScene();
 }
 
 myScene::~myScene()
@@ -82,12 +83,15 @@ void myScene::Shoot(physx::PxVec3 camPos, physx::PxVec3 camDir)
 		9.8f,                                           // gravedad
 		Vector3D<float>(0, 0, 100)                      // tamano u otro parametro tuyo
 	));
-	mParticles.push_back(mCar->shoot());
+
+	if(mCar != nullptr)
+		mParticles.push_back(mCar->shoot());
 }
 
 void myScene::moveCar(Vector3 moveDir)
 {
-	mCar->move(moveDir);
+	if(mCar != nullptr)
+		mCar->move(moveDir);
 }
 
 void myScene::createAxis()
@@ -131,6 +135,9 @@ void myScene::chooseScene(int id)
 		break;
 	case 4:
 		scene4();
+		break;
+	case 5:
+		scene5();
 		break;
 	default:
 		break;
@@ -228,9 +235,9 @@ void myScene::scene4()
 	ParticleSystem* myPS = new ParticleSystem();
 	mPSystems.emplace("scene4Sys",myPS);
 
-	gravityForceGenerator* gG = new gravityForceGenerator(mVector3D(0, -9.8, 0));
-	WindForceGenerator* wG = new WindForceGenerator(mVector3D(5,5,0 ), 0.8f);
-	VortexForceGenerator* vG = new VortexForceGenerator(mVector3D(30, 30, 30),0.02,0.1,2);
+	gravityForceGenerator* gG = new gravityForceGenerator(mVector3D(0, -1000, 0));
+	WindForceGenerator* wG = new WindForceGenerator(mVector3D(500,500,0 ), 0.8f);
+	VortexForceGenerator* vG = new VortexForceGenerator(mVector3D(30, 30, 30),30,10,30);
 
 	//fuego
 	NormalGeneratorWithForces* pG = new NormalGeneratorWithForces(
@@ -249,7 +256,7 @@ void myScene::scene4()
 	);
 	//pG->addForceGenerator(gG);
 	pG->addForceGenerator(wG);
-	//pG->addForceGenerator(vG);
+	pG->addForceGenerator(vG);
 	myPS->addParticleGen(pG);
 
 	// Generador de lluvia
@@ -289,7 +296,7 @@ void myScene::scene4()
 		mVector3D(0, -10, 0),      // Aceleracion
 		mVector3D(0, 0, 0),      // Offset minimo de aceleracion
 		mVector3D(0, 0, 0),      // Offset maximo de aceleracion
-		2,                        // Tiempo de vida minimo
+		4,                        // Tiempo de vida minimo
 		4,                        // Tiempo de vida maximo
 		10,                       // Distancia maxima
 		true,                     // Activo
@@ -298,6 +305,23 @@ void myScene::scene4()
 	);
 	pG2->addForceGenerator(vG);
 	myPS->addParticleGen(pG2);
+}
+
+void myScene::scene5()
+{
+	ParticleWithMass* pstatic = new ParticleWithMass({ 10.0,0.0,0.0, }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 0.4, 0, 1000, 2);
+	ParticleWithMass* pstring = new ParticleWithMass({ 10.0,-100.0,0.0, }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 0.4,0.2, 1000, 2);
+
+	gravityForceGenerator* gG = new gravityForceGenerator(mVector3D(0, -10, 0));
+	pstring->addForceGenerator(gG);
+
+	SpringForceGenerator* string = new SpringForceGenerator(1, 10, pstatic);
+	pstring->addForceGenerator(string);
+
+
+	mFG.emplace("string", string);
+	mParticles.push_back(pstring);
+	mParticles.push_back(pstatic);
 }
 
 void myScene::gameScene()

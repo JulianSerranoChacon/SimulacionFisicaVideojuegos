@@ -6,7 +6,7 @@ public:
     WindForceGenerator(mVector3D windVel, float k = 1.0f);
     virtual ~WindForceGenerator();
 
-    void addForce(ParticleWithMass* p) override;
+    mVector3D addForce(ParticleWithMass* p) override;
 
 private:
     float k1;

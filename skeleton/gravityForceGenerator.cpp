@@ -9,11 +9,11 @@ gravityForceGenerator::~gravityForceGenerator()
 {
 }
 
-void gravityForceGenerator::addForce(ParticleWithMass* p)
+mVector3D gravityForceGenerator::addForce(ParticleWithMass* p)
 {
 	if (!active || p->getMass() == 0)
-		return;
+		return { 0,0,0 };
 
-	mVector3D accel = {forceToAply.getX()/p->getMass(),forceToAply.getY() / p->getMass() ,forceToAply.getZ()/p->getMass()};
-	p->addAcceleration(accel);
+	mVector3D accel = forceToAply * p->getMass();
+	return accel;
 }

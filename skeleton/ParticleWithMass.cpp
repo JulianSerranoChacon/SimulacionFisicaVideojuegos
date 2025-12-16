@@ -22,9 +22,13 @@ ParticleWithMass::~ParticleWithMass()
 
 void ParticleWithMass::integrate(double t)
 {
-	for (ForceGenerator* fg : fG) {
-		if (fg != nullptr)
-			fg->addForce(this);
+	force = { 0,0,0 };
+	if (mass != 0.0) {
+		for (ForceGenerator* fg : fG) {
+			if (fg != nullptr)
+				force += fg->addForce(this);
+		}
+		vel_ = accel_*t + force/mass * t;
 	}
 
 	Particle::integrate(t);

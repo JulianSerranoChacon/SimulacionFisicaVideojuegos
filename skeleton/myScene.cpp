@@ -17,7 +17,7 @@ using namespace physx;
 
 myScene::myScene()
 {
-	chooseScene(4);
+	chooseScene(5);
 	//gameScene();
 }
 
@@ -310,13 +310,17 @@ void myScene::scene4()
 void myScene::scene5()
 {
 	ParticleWithMass* pstatic = new ParticleWithMass({ 10.0,0.0,0.0, }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 0.4, 0, 1000, 2);
-	ParticleWithMass* pstring = new ParticleWithMass({ 10.0,-100.0,0.0, }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 0.4,0.2, 1000, 2);
+	ParticleWithMass* pstring = new ParticleWithMass({ 10.0,-10.0,0.0, }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 0.4,0.2, 1000, 2);
+	ParticleWithMass* pstring2 = new ParticleWithMass({ 10.0,-20.0,0.0, }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 0.4, 0.2, 1000, 2);
 
-	gravityForceGenerator* gG = new gravityForceGenerator(mVector3D(0, -10, 0));
+	gravityForceGenerator* gG = new gravityForceGenerator(mVector3D(0, -500, 0));
 	pstring->addForceGenerator(gG);
 
-	SpringForceGenerator* string = new SpringForceGenerator(1, 10, pstatic);
+	SpringForceGenerator* string = new SpringForceGenerator(1, 5, pstatic);
 	pstring->addForceGenerator(string);
+
+	SpringForceGenerator* string2 = new SpringForceGenerator(1, 5, pstring);
+	pstring->addForceGenerator(string2);
 
 
 	mFG.emplace("string", string);

@@ -1,7 +1,8 @@
 #include "BouyancyForceGenerator.h"
 #include "ParticleWithMass.h"
 
-BouyancyForceGenerator::BouyancyForceGenerator(float h, float v, float d): height(h),volume(v),liquidDensity(d)
+BouyancyForceGenerator::BouyancyForceGenerator(float h, float v, float d, ParticleWithMass* liquid): height(h),volume(v),liquidDensity(d),
+liquidParticle(liquid)
 {
 }
 

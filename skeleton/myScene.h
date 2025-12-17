@@ -32,6 +32,7 @@ private:
 	void scene3();
 	void scene4();
 	void scene5();
+	void scene6();
 	void gameScene();
 	std::vector<RenderItem*> mItems;
 	std::vector<Particle*> mParticles;

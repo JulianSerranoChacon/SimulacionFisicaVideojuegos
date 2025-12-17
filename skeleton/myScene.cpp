@@ -12,12 +12,13 @@
 #include "VortexForceGenerator.h"
 #include "SpringForceGenerator.h"
 #include "Car.h"
+#include "BouyancyForceGenerator.h"
 
 using namespace physx;
 
 myScene::myScene()
 {
-	chooseScene(5);
+	chooseScene(6);
 	//gameScene();
 }
 
@@ -118,7 +119,7 @@ void myScene::createAxis()
 void myScene::chooseScene(int id)
 {
 
-	createAxis();
+	//createAxis();
 	switch (id)
 	{
 	case 0:
@@ -138,6 +139,9 @@ void myScene::chooseScene(int id)
 		break;
 	case 5:
 		scene5();
+		break;
+	case 6:
+		scene6();
 		break;
 	default:
 		break;
@@ -326,6 +330,25 @@ void myScene::scene5()
 	mFG.emplace("string", string);
 	mParticles.push_back(pstring);
 	mParticles.push_back(pstatic);
+
+	mFG.emplace("gravity", gG);
+}
+
+void myScene::scene6()
+{
+	ParticleWithMass* p = new ParticleWithMass({ 0.0,0.0,0.0, }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 0.4,10000000, 1000, 3);
+	//ParticleWithMass* p = new ParticleWithMass({ 0.0,0.0,0.0, }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 0.4, 10000, 1000, 3
+	//ParticleWithMass* p = new ParticleWithMass({ 0.0,0.0,0.0, }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 0.4, 200, 1000, 3);
+	ParticleWithMass* p2 = new ParticleWithMass({ 0.0,0.0,0.0, }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 50, 0, 1000, 3,CreateShape(physx::PxBoxGeometry(3,3,3)),Vector4(0.0,0.0,0.7,0.2));
+
+	BouyancyForceGenerator* bFG = new BouyancyForceGenerator(3, 3, 1000,p2);
+	//gravityForceGenerator* gG = new gravityForceGenerator(mVector3D(0, -10, 0));
+	p->addForceGenerator(bFG);
+	//p->addForceGenerator(gG);
+
+	mParticles.push_back(p);
+	mFG.emplace("bouyancy", bFG);
+	//mFG.emplace("gravity", gG);
 }
 
 void myScene::gameScene()

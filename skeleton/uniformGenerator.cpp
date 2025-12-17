@@ -12,6 +12,10 @@ uniformGenerator::uniformGenerator(int maxParticles, double emisionVel, mVector3
 	random = std::mt19937(randomDevice());
 }
 
+uniformGenerator::~uniformGenerator()
+{
+}
+
 void uniformGenerator::generate(double t)
 {
 	emisionVel -= t;

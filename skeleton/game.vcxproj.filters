@@ -31,6 +31,9 @@
     <ClCompile Include="BouyancyForceGenerator.cpp" />
     <ClCompile Include="SolidStatic.cpp" />
     <ClCompile Include="SolidDynamic.cpp" />
+    <ClCompile Include="SolidSystem.cpp" />
+    <ClCompile Include="SolidGenerator.cpp" />
+    <ClCompile Include="UniformSolidGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -64,6 +67,9 @@
     <ClInclude Include="BouyancyForceGenerator.h" />
     <ClInclude Include="SolidStatic.h" />
     <ClInclude Include="SolidDynamic.h" />
+    <ClInclude Include="SolidSystem.h" />
+    <ClInclude Include="SolidGenerator.h" />
+    <ClInclude Include="UniformSolidGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

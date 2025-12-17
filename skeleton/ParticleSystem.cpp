@@ -6,6 +6,14 @@ ParticleSystem::ParticleSystem()
 
 ParticleSystem::~ParticleSystem()
 {
+	for (ParticleGenerator* pg : mPGs) {
+		if (pg != nullptr) {
+			delete pg;
+			pg = nullptr;
+		}
+	}
+
+	mPGs.clear();
 }
 
 void ParticleSystem::addParticleGen(ParticleGenerator* pG)

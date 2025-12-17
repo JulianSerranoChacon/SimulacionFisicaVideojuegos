@@ -1,5 +1,6 @@
 #include "ParticleGenerator.h"
 #include "ParticleGen.h"
+#include "SolidGenerator.h"
 
 
 ParticleGenerator::ParticleGenerator(int maxParticles, double emisionVel, mVector3D genPos, mVector3D genPosOffset,mVector3D genVel, mVector3D genVelOffset, mVector3D genAccel,

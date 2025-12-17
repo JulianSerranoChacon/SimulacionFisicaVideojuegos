@@ -9,6 +9,10 @@ uniformGeneratorWithForces::uniformGeneratorWithForces(int maxParticles, double 
 {
 }
 
+uniformGeneratorWithForces::~uniformGeneratorWithForces()
+{
+}
+
 void uniformGeneratorWithForces::generate(double t)
 {
 	emisionVel -= t;

@@ -2,7 +2,6 @@
 
 #include <PxPhysicsAPI.h>
 #include "RenderUtils.hpp"
-#include "core.hpp"
 
 using namespace physx;
 class SolidStatic

@@ -11,7 +11,7 @@ public:
 	void update(double t);
 	void moveTo(Vector3 v);
 	void setActive(bool a);
-	bool getActive() { return active;}
+	inline bool getActive() { return active;}
 private:
 	std::list<ParticleGenerator*> mPGs;
 	bool active = true;

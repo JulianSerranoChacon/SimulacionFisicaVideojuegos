@@ -10,6 +10,7 @@ class ParticleSystem;
 class Car;
 class ForceGenerator;
 class SolidStatic;
+class SolidDynamic;
 using namespace physx;
 class myScene
 {
@@ -40,6 +41,7 @@ private:
 	std::vector<RenderItem*> mItems;
 	std::vector<Particle*> mParticles;
 	std::vector<SolidStatic*> mSolidsStatics;
+	std::vector<SolidDynamic*> mSolidDynamics;
 	std::map<std::string, ParticleSystem*> mPSystems;
 	std::map<std::string, ForceGenerator*> mFG;
 	Car* mCar;

@@ -14,6 +14,7 @@
 #include "Car.h"
 #include "BouyancyForceGenerator.h"
 #include "SolidStatic.h"
+#include "SolidDynamic.h"
 
 using namespace physx;
 
@@ -42,6 +43,12 @@ myScene::~myScene()
 		if (mSolidsStatics[i] != nullptr) {
 			delete mSolidsStatics[i];
 			mSolidsStatics[i] = nullptr;
+		}
+	}
+	for (int i = 0; i < mSolidDynamics.size(); i++) {
+		if (mSolidDynamics[i] != nullptr) {
+			delete mSolidDynamics[i];
+			mSolidDynamics[i] = nullptr;
 		}
 	}
 	for (auto e : mPSystems) 
@@ -365,6 +372,11 @@ void myScene::scene7()
 {
 	SolidStatic* suelo = new SolidStatic(gScene, gPhysics, CreateShape(PxBoxGeometry(500, 5, 500)),PxTransform(0,0,0),Vector4(1,1,0,1));
 	mSolidsStatics.push_back(suelo);
+
+	SolidDynamic* coche = new SolidDynamic(gScene, gPhysics,
+		CreateShape(PxBoxGeometry(10, 5, 10)), PxTransform(0, 0, 0), Vector4(1, 0, 1, 1));
+
+	mSolidDynamics.push_back(coche);
 }
 
 void myScene::gameScene()

@@ -374,7 +374,7 @@ void myScene::scene7()
 	mSolidsStatics.push_back(suelo);
 
 	SolidDynamic* coche = new SolidDynamic(gScene, gPhysics,
-		CreateShape(PxBoxGeometry(10, 5, 10)), PxTransform(0, 0, 0), Vector4(1, 0, 1, 1));
+		CreateShape(PxBoxGeometry(10, 5, 10)), PxTransform(0, 0, 0), 0.15, Vector4(1, 0, 1, 1));
 
 	mSolidDynamics.push_back(coche);
 }

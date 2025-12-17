@@ -1,7 +1,7 @@
 #include "SolidDynamic.h"
 
-SolidDynamic::SolidDynamic(PxScene* gScene, PxPhysics* gPhysics, PxShape* shape, PxTransform& transform, Vector4& color) : gPhysics_(gPhysics),
-transform_(transform)
+SolidDynamic::SolidDynamic(PxScene* gScene, PxPhysics* gPhysics, PxShape* shape, PxTransform& transform, double density, Vector4& color) :
+	gPhysics_(gPhysics), transform_(transform)
 {
 	obj_ = gPhysics_->createRigidDynamic(transform_);
 	obj_->setLinearVelocity(Vector3(0, 5, 0));
@@ -12,7 +12,7 @@ transform_(transform)
 	obj_->attachShape(*shape);
 	gScene->addActor(*obj_);
 
-	PxRigidBodyExt::updateMassAndInertia(*obj_, 0.15);
+	PxRigidBodyExt::updateMassAndInertia(*obj_, density);
 	rItem_ = new RenderItem(shape, obj_, color);
 }
 

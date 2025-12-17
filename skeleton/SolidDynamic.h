@@ -9,7 +9,7 @@ using namespace physx;
 class SolidDynamic
 {
 public:
-	SolidDynamic(PxScene* gScene, PxPhysics* gPhysics, PxShape* shape, PxTransform& transform, Vector4& color);
+	SolidDynamic(PxScene* gScene, PxPhysics* gPhysics, PxShape* shape, PxTransform& transform,double density, Vector4& color = Vector4(1));
 	~SolidDynamic();
 
 private:
@@ -18,5 +18,6 @@ private:
 	PxRigidDynamic* obj_;
 	PxTransform transform_;
 	RenderItem* rItem_;
+
 };
 

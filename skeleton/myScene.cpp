@@ -13,12 +13,13 @@
 #include "SpringForceGenerator.h"
 #include "Car.h"
 #include "BouyancyForceGenerator.h"
+#include "SolidStatic.h"
 
 using namespace physx;
 
-myScene::myScene()
+myScene::myScene(PxScene* gScene, PxPhysics* gPhysics): gScene(gScene), gPhysics(gPhysics)
 {
-	chooseScene(6);
+	chooseScene(7);
 	//gameScene();
 }
 
@@ -35,6 +36,12 @@ myScene::~myScene()
 		if (mItems[i] != nullptr) {
 			DeregisterRenderItem(mItems[i]);
 			mItems[i] = nullptr;
+		}
+	}
+	for (int i = 0; i < mSolidsStatics.size(); i++) {
+		if (mSolidsStatics[i] != nullptr) {
+			delete mSolidsStatics[i];
+			mSolidsStatics[i] = nullptr;
 		}
 	}
 	for (auto e : mPSystems) 
@@ -142,6 +149,9 @@ void myScene::chooseScene(int id)
 		break;
 	case 6:
 		scene6();
+		break;
+	case 7:
+		scene7();
 		break;
 	default:
 		break;
@@ -349,6 +359,12 @@ void myScene::scene6()
 	mParticles.push_back(p);
 	mFG.emplace("bouyancy", bFG);
 	//mFG.emplace("gravity", gG);
+}
+
+void myScene::scene7()
+{
+	SolidStatic* suelo = new SolidStatic(gScene, gPhysics, CreateShape(PxBoxGeometry(500, 5, 500)),PxTransform(0,0,0),Vector4(1,1,0,1));
+	mSolidsStatics.push_back(suelo);
 }
 
 void myScene::gameScene()

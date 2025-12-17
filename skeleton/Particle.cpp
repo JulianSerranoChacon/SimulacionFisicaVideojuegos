@@ -16,6 +16,7 @@ pose_(Pos.getX(), Pos.getY(), Pos.getZ()), sv(sV), size(size)
 Particle::~Particle()
 {
 	DeregisterRenderItem(renderItem_);
+	renderItem_ = nullptr;
 }
 
 void Particle::integrate(double t)

@@ -29,6 +29,7 @@
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="SpringForceGenerator.cpp" />
     <ClCompile Include="BouyancyForceGenerator.cpp" />
+    <ClCompile Include="SolidStatic.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -60,6 +61,7 @@
     <ClInclude Include="Ball.h" />
     <ClInclude Include="SpringForceGenerator.h" />
     <ClInclude Include="BouyancyForceGenerator.h" />
+    <ClInclude Include="SolidStatic.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

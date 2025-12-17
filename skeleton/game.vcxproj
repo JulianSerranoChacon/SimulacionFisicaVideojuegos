@@ -273,6 +273,7 @@
     <ClCompile Include="RenderUtils.cpp" />
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Render.cpp" />
+    <ClCompile Include="SolidStatic.cpp" />
     <ClCompile Include="SpringForceGenerator.cpp" />
     <ClCompile Include="uniformGenerator.cpp" />
     <ClCompile Include="uniformGeneratorWithForces.cpp" />
@@ -299,6 +300,7 @@
     <ClInclude Include="RenderUtils.hpp" />
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\Render.h" />
+    <ClInclude Include="SolidStatic.h" />
     <ClInclude Include="SpringForceGenerator.h" />
     <ClInclude Include="uniformGenerator.h" />
     <ClInclude Include="uniformGeneratorWithForces.h" />

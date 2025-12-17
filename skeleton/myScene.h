@@ -9,10 +9,12 @@ class Particle;
 class ParticleSystem;
 class Car;
 class ForceGenerator;
+class SolidStatic;
+using namespace physx;
 class myScene
 {
 public:
-	myScene();
+	myScene(PxScene* gScene, PxPhysics* gPhysics);
 	~myScene();
 
 	void update(float t);
@@ -33,10 +35,14 @@ private:
 	void scene4();
 	void scene5();
 	void scene6();
+	void scene7();
 	void gameScene();
 	std::vector<RenderItem*> mItems;
 	std::vector<Particle*> mParticles;
+	std::vector<SolidStatic*> mSolidsStatics;
 	std::map<std::string, ParticleSystem*> mPSystems;
 	std::map<std::string, ForceGenerator*> mFG;
 	Car* mCar;
+	PxScene* gScene;
+	PxPhysics* gPhysics;
 };

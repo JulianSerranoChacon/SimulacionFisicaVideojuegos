@@ -127,7 +127,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		mScene->iniLLuvia();
 		break;
 	case'K':
-		mScene->stopMPSystems("lluvia");
+		mScene->toggleMPSystems("lluvia");
 		break;
 	case'O':
 		mScene->toggleMFG("gravedad");

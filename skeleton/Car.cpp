@@ -45,7 +45,7 @@ void Car::integrate(double t)
     transform = obj->getGlobalPose();
 }
 
-void Car::applyMove(Vector3& dir, double t)
+void Car::applyMove(Vector3& dir)
 {
     if (!obj)
         return;

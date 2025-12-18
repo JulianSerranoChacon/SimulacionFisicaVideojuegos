@@ -783,7 +783,7 @@ void myScene::iniLLuvia()
 	myPS->addParticleGen(pG);
 }
 
-void myScene::stopMPSystems(std::string s)
+void myScene::toggleMPSystems(std::string s)
 {
 	if (mPSystems.count(s))
 		mPSystems[s]->setActive(!mPSystems[s]->getActive());

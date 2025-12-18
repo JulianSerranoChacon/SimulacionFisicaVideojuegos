@@ -30,7 +30,7 @@ public:
 	void jumpCar();
 	void toggleTurbo();
 	void iniLLuvia();
-	void stopMPSystems(std::string s);
+	void toggleMPSystems(std::string s);
 	void toggleMFG(std::string s);
 	void goal();
 	void createParticleSystemInGame();

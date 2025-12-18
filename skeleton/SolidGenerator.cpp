@@ -1,10 +1,12 @@
 #include "SolidGenerator.h"
 
-SolidGenerator::SolidGenerator(PxScene* gScene, PxPhysics* gPhysics,int maxParticles, double emisionVel, Vector3 genPos, Vector3 genPosOffset, Vector3 genVel,
-	Vector3 genVelOffset, Vector3 genAccel, Vector3 genAccelOffset, double timeLifeMin, double timeLifeMax, double maxDistance,
-	bool active, Vector4 sV): gScene(gScene), gPhysics(gPhysics), maxParticles(maxParticles), emisionVel(0), iniEmisionVel(emisionVel),
-	genPos(genPos), genPosOffset(genPosOffset), genVel(genVel), genVelOffset(genVelOffset), genAccel(genAccel), genAccelOffset(genAccelOffset),
-	timeLifeMin(timeLifeMin), timeLifeMax(timeLifeMax), maxDistance(maxDistance), active(active), nParticles(0), sV(sV)
+SolidGenerator::SolidGenerator(PxScene* gScene, PxPhysics* gPhysics,int maxParticles, double emisionVel, Vector3 genPos, Vector3 genPosOffset,
+	Vector3 genVel,Vector3 genVelOffset, Vector3 genAngVel, Vector3 genAngVelOffset, double staticFriction, double dynamicFriction,
+	double restitution,double timeLifeMin, double timeLifeMax, double maxDistance,bool active, Vector4 sV): 
+	gScene(gScene), gPhysics(gPhysics),maxParticles(maxParticles), emisionVel(0), iniEmisionVel(emisionVel),genPos(genPos),
+	genPosOffset(genPosOffset), genVel(genVel),genVelOffset(genVelOffset), genAngVel(genAngVel), genAngVelOffset(genAngVelOffset),
+	timeLifeMin(timeLifeMin), timeLifeMax(timeLifeMax),maxDistance(maxDistance), active(active), nParticles(0), sV(sV),
+	staticFriction(staticFriction), dynamicFriction(dynamicFriction),restitution(restitution)
 {
 	listS = std::list<SolidDynamic*>();
 	listStoKill = std::list<SolidDynamic*>();
@@ -35,7 +37,7 @@ void SolidGenerator::update(double t) {
 
 void SolidGenerator::killParts() {
 
-	for (SolidDynamic* s : listS) {
+	for (SolidDynamic* s : listStoKill) {
 		listS.remove(s);
 		if (s != nullptr) {
 			delete s;

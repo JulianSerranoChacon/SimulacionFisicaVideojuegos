@@ -11,6 +11,8 @@ class Car;
 class ForceGenerator;
 class SolidStatic;
 class SolidDynamic;
+class SolidSystem;
+class SolidGenerator;
 using namespace physx;
 class myScene
 {
@@ -37,6 +39,7 @@ private:
 	void scene5();
 	void scene6();
 	void scene7();
+	void scene8();
 	void gameScene();
 	std::vector<RenderItem*> mItems;
 	std::vector<Particle*> mParticles;
@@ -44,6 +47,7 @@ private:
 	std::vector<SolidDynamic*> mSolidDynamics;
 	std::map<std::string, ParticleSystem*> mPSystems;
 	std::map<std::string, ForceGenerator*> mFG;
+	std::map<std::string, SolidSystem*> mSSystems;
 	Car* mCar;
 	PxScene* gScene;
 	PxPhysics* gPhysics;

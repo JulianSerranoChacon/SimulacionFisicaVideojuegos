@@ -15,12 +15,15 @@
 #include "BouyancyForceGenerator.h"
 #include "SolidStatic.h"
 #include "SolidDynamic.h"
+#include "SolidSystem.h"
+#include "SolidGenerator.h"
+#include "uniformSolidGenerator.h"
 
 using namespace physx;
 
 myScene::myScene(PxScene* gScene, PxPhysics* gPhysics): gScene(gScene), gPhysics(gPhysics)
 {
-	chooseScene(7);
+	chooseScene(8);
 	//gameScene();
 }
 
@@ -57,6 +60,12 @@ myScene::~myScene()
 			delete e.second;
 		e.second = nullptr;
 	}
+	for (auto s : mSSystems)
+	{
+		if (s.second != nullptr)
+			delete s.second;
+		s.second = nullptr;
+	}
 	for (auto e : mFG)
 	{
 		if (e.second != nullptr)
@@ -72,7 +81,12 @@ void myScene::update(float t)
 			mParticles[i]->integrate(t);
 
 	for (auto pS : mPSystems)
-		pS.second->update(t);
+		if(pS.second != nullptr)
+			pS.second->update(t);
+
+	for (auto SS : mSSystems)
+		if(SS.second != nullptr)
+			SS.second->update(t);
 }
 
 void myScene::Shoot(physx::PxVec3 camPos, physx::PxVec3 camDir)
@@ -159,6 +173,9 @@ void myScene::chooseScene(int id)
 		break;
 	case 7:
 		scene7();
+		break;
+	case 8:
+		scene8();
 		break;
 	default:
 		break;
@@ -374,9 +391,54 @@ void myScene::scene7()
 	mSolidsStatics.push_back(suelo);
 
 	SolidDynamic* coche = new SolidDynamic(gScene, gPhysics,
-		CreateShape(PxBoxGeometry(10, 5, 10)), PxTransform(0, 0, 0), 0.15, Vector4(1, 0, 1, 1));
+		CreateShape(PxBoxGeometry(10, 5, 10)), PxTransform(0, 0, 0), 0.15,10,10,10, Vector4(1, 0, 1, 1));
 
 	mSolidDynamics.push_back(coche);
+}
+
+void myScene::scene8()
+{
+	SolidSystem* mSolSys = new SolidSystem;
+	mSSystems.emplace("system", mSolSys);
+	UniformSolidGenerator* rain = new UniformSolidGenerator(
+		gScene,
+		gPhysics,
+		5000,                 // maxParticles
+		0.07,                 // emisionVel
+		Vector3(0, 500, 0),    // genPos
+
+		// Posición aleatoria
+		Vector3(-500, 0, -500), // genPosOffsetMin
+		Vector3(500, 5, 500), // genPosOffsetMax
+
+		// Velocidad
+		Vector3(0, -30, 0),   // genVel
+		Vector3(-1, -5, -1),  // genVelOffsetMin
+		Vector3(1, 0, 1),  // genVelOffsetMax
+
+		// Velocidad angular
+		Vector3(0, 0, 0),
+		Vector3(0, 0, 0),
+		Vector3(0, 0, 0),
+
+		// Material
+		0.0,   // static friction
+		0.0,   // dynamic friction
+		0.05,  // restitution
+
+		// Vida
+		4.0,
+		6.0,
+
+		// Distancia máxima
+		1000.0,
+
+		true,          // active
+		1000.0f,       // density (agua)
+		Vector4(0.5, 0.5, 1.0, 1.0) // color
+	);
+
+	mSolSys->addSolidGenerator(rain);
 }
 
 void myScene::gameScene()

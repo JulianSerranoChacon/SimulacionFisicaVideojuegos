@@ -8,7 +8,7 @@ class UniformSolidGenerator : public SolidGenerator
 public:
 	UniformSolidGenerator(PxScene* gScene, PxPhysics* gPhysicsint,int maxParticles, double emisionVel, Vector3 genPos,
 		Vector3 genPosOffsetMin,Vector3 genPosOffsetMax, Vector3 genVel, Vector3 genVelOffsetMin, Vector3 genVelOffsetMax,
-		Vector3 genAccel, Vector3 genAccelOffsetMin, Vector3 genAccelOffsetMax,
+		Vector3 genAccel, Vector3 AngVelOffsetMin, Vector3 AngVelOffsetMax, double staticFriction, double dynamicFriction, double restitution,
 		double timeLifeMin, double timeLifeMax, double maxDistance, bool active, float density, Vector4 sV);
 	virtual ~UniformSolidGenerator();
 	virtual void generate(double t) override;
@@ -21,6 +21,6 @@ protected:
 	std::mt19937 random;
 	Vector3 genPosOffsetMin;
 	Vector3 genVelOffsetMin;
-	Vector3 genAccelOffsetMin;
+	Vector3 genAngVelOffsetMin;
 };
 

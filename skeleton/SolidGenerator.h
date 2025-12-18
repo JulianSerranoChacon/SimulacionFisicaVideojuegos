@@ -8,9 +8,9 @@ using namespace physx;
 class SolidGenerator
 {
 public:
-	SolidGenerator(PxScene* gScene, PxPhysics* gPhysics, int maxParticles, double emisionVel, Vector3 genPos, Vector3 genPosOffset, Vector3 genVel, Vector3 genVelOffset,
-		Vector3 genAccel, Vector3 genAccelOffset,
-		double timeLifeMin, double timeLifeMax, double maxDistance, bool active, Vector4 sV);
+	SolidGenerator(PxScene* gScene, PxPhysics* gPhysics, int maxParticles, double emisionVel, Vector3 genPos, Vector3 genPosOffset,
+		Vector3 genVel, Vector3 genVelOffset,Vector3 genAngVel, Vector3 genAccelOffset, double staticFriction, double dynamicFriction,
+		double restitution, double timeLifeMin, double timeLifeMax, double maxDistance, bool active, Vector4 sV);
 	virtual ~SolidGenerator();
 	virtual void update(double t);
 	virtual void generate(double t) = 0;
@@ -28,8 +28,8 @@ protected:
 	Vector3 genPosOffset;
 	Vector3 genVel;
 	Vector3 genVelOffset;
-	Vector3 genAccel;
-	Vector3 genAccelOffset;
+	Vector3 genAngVel;
+	Vector3 genAngVelOffset;
 	double timeLifeMin;
 	double timeLifeMax;
 	double maxDistance;
@@ -37,5 +37,8 @@ protected:
 	Vector4 sV;
 	PxScene* gScene;
 	PxPhysics* gPhysics;
+	double staticFriction;
+	double dynamicFriction;
+	double restitution;
 };
 

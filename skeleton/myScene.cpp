@@ -20,6 +20,7 @@
 #include "uniformSolidGenerator.h"
 #include "NormalSolidGenerator.h"
 #include "ParticleWithMass.h"
+#include "Ball.h"
 
 using namespace physx;
 
@@ -77,6 +78,9 @@ myScene::~myScene()
 	}
 	if (mCar != nullptr)
 		delete mCar;
+
+	if (mBall != nullptr)
+		delete mBall;
 }
 
 void myScene::update(float t)
@@ -534,7 +538,7 @@ void myScene::GameScene()
 
 	configureCar();
 
-
+	createNewBall();
 }
 
 void myScene::PoyectoIntermedioScene()
@@ -614,6 +618,47 @@ void myScene::configureCar()
 	myPS->addParticleGen(pG);
 	myPS->setActive(false);
 	mCar->setPS(myPS);
+}
+
+void myScene::createNewBall()
+{
+	// ---------- CONFIGURACIÓN ----------
+	float radius = 10.0f;          // Tamaño de la bola (GIGANTE)
+	double density = 10.0;         // Densidad alta → pesada
+	float staticFriction = 0.8f;
+	float dynamicFriction = 0.6f;
+	float restitution = 0.4f;      // Poco rebote
+	Vector4 color(0.2f, 0.6f, 1.0f, 1.0f); // Azul
+
+	// ---------- MATERIAL ----------
+	PxMaterial* material = gPhysics->createMaterial(
+		staticFriction,
+		dynamicFriction,
+		restitution
+	);
+
+	// ---------- SHAPE (ESFERA) ----------
+	PxShape* sphereShape = gPhysics->createShape(
+		PxSphereGeometry(radius),
+		*material
+	);
+
+	// ---------- TRANSFORM ----------
+	Vector3 pos = Vector3(0, 20, 0);
+	PxTransform transform(pos);
+
+	// ---------- OBJETO DINÁMICO ----------
+	mBall = new Ball(gScene,gPhysics,sphereShape,transform,density,staticFriction,dynamicFriction,restitution,color);
+
+	mBall->getObject()->setMass(500.0f);              // Muy pesada
+	mBall->getObject()->setLinearDamping(0.02f);      // Que ruede bien
+	mBall->getObject()->setAngularDamping(0.05f);
+}
+
+void myScene::resetBall()
+{
+	delete mBall;
+	createNewBall();
 }
 
 void myScene::toggleTurbo()

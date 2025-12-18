@@ -13,6 +13,7 @@ class SolidStatic;
 class SolidDynamic;
 class SolidSystem;
 class SolidGenerator;
+class Ball;
 using namespace physx;
 class myScene
 {
@@ -45,6 +46,8 @@ private:
 	void GameScene();
 	void PoyectoIntermedioScene();
 	void configureCar();
+	void createNewBall();
+	void resetBall();
 	std::vector<RenderItem*> mItems;
 	std::vector<Particle*> mParticles;
 	std::vector<SolidStatic*> mSolidsStatics;
@@ -53,6 +56,7 @@ private:
 	std::map<std::string, ForceGenerator*> mFG;
 	std::map<std::string, SolidSystem*> mSSystems;
 	Car* mCar = nullptr;
+	Ball* mBall = nullptr;
 	PxScene* gScene = nullptr;
 	PxPhysics* gPhysics = nullptr;
 };

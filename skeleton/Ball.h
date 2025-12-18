@@ -1,14 +1,11 @@
 #pragma once
-#include "ParticleWithMass.h"
-class ParticleSystem;
-class Ball :public ParticleWithMass
+#include "SolidDynamic.h"
+class Ball :public SolidDynamic
 {
 public:
-	Ball(MVector3 pos, MVector3 moveDir, double speed, float dumping, float mass, float timeLife, float size, Vector4 sV);
+	Ball(PxScene* gScene, PxPhysics* gPhysics, PxShape* shape, PxTransform& transform, double density,
+		double staticFriction, double dynamicFriction, double restitution, Vector4& color = Vector4(1));
 	~Ball();
-
-	inline void setPS(ParticleSystem* p) { pS = p; }
 protected:
-	ParticleSystem* pS = nullptr;
 };
 

@@ -11,7 +11,7 @@ public:
 	~Car();
 	virtual Proyectil* shoot();
 	virtual void integrate(double t) override;
-	virtual void applyMove(Vector3& dir, double t);
+	virtual void applyMove(Vector3& dir);
 	virtual void move(const Vector3& dir);
 	virtual void jump();
 	inline void setPS(ParticleSystem* p) { pS = p; }

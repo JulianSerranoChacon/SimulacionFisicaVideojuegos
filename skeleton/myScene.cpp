@@ -714,11 +714,11 @@ void myScene::iniLLuvia()
 	uniformGeneratorWithForces* pG = new uniformGeneratorWithForces(
 		100,                  // Ma ximo de particulas
 		0.07,                 // Tiempo entre emisiones
-		mVector3D(0, 30, 0),    // Posicion del generador (altura)
-		MVector3(0, 0, 0),      // Offset minimo de posicion
+		mVector3D(0, 100, 0),    // Posicion del generador (altura)
+		MVector3(-60, 0, -60),      // Offset minimo de posicion
 		mVector3D(60, 0, 60),   // Offset maximo de posicion (ancho y profundidad del cuadrado)
-		MVector3(0, -25, 0),    // Velocidad
-		MVector3(0, -2, 0),     // Offset minimo de la velocidad 
+		MVector3(0.0, -40, 0.0),    // Velocidad
+		MVector3(0.0, -40, 0.0),     // Offset minimo de la velocidad 
 		MVector3(0, 0, 0),      // Offset maximo de la velocidad a
 		MVector3(0, 0, 0),      // Aceleracion
 		MVector3(0, 0, 0),      // Offset minimo de la aceleracion
@@ -727,7 +727,7 @@ void myScene::iniLLuvia()
 		2,                  // Tiempo de vida maximo
 		50.0,                 // Distancia maxima
 		true,                 // Activo
-		50,						//masa
+		0.0,						//masa
 		Vector4(0.6, 0.7, 1.0, 1) // Color azul
 	);
 	if (mFG.count("gravedad")) {
@@ -766,11 +766,18 @@ void myScene::createParticleSystemInGame()
 
 	Vector3D pos(g1->getObj()->getGlobalPose().p.x, g1->getObj()->getGlobalPose().p.y,
 		g1->getObj()->getGlobalPose().p.z);
+
+	WindForceGenerator* wG = new WindForceGenerator(mVector3D(500, 500, 0), 0.8f);
+	VortexForceGenerator* vG = new VortexForceGenerator(mVector3D(30, 30, 30), 30, 10, 30);
+
+	mFG.emplace("viento", wG);
+	mFG.emplace("vortex", vG);
+
 	//fuego
 	NormalGeneratorWithForces* pG = new NormalGeneratorWithForces(
 		300, 0.003,                      // numero particulas, velocidad de emision
-		mVector3D(pos),					// Posicion
-		mVector3D(pos.getX() + 0.1, pos.getY() + 0.5, pos.getZ() + 0.1),           // Offset de la posicion
+		mVector3D(pos + MVector3(30, 40,0)),					// Posicion
+		mVector3D(0,0,0),				// Offset de la posicion
 		mVector3D(0, 8, 0),             // velocidad
 		mVector3D(0.2, 3, 0.2),             // Offset de la velocidad
 		MVector3(0, 2, 0),              // aceleracion
@@ -781,31 +788,15 @@ void myScene::createParticleSystemInGame()
 		0.0,								//masa
 		Vector4(1, 0.5, 0, 1)           // color
 	);
+
+	pG->addForceGenerator(wG);
+	pG->addForceGenerator(vG);
 	fuegoG1->addParticleGen(pG);
 	mPSystems.emplace("fuego", fuegoG1);
 	fuegoG1->setActive(false);
 
 	ParticleSystem* pS = new ParticleSystem();
-	// Generador de lluvia
-	uniformGenerator* pG2 = new uniformGenerator(
-		100,                  // Ma ximo de particulas
-		0.07,                 // Tiempo entre emisiones
-		mVector3D(0, 100, 0),    // Posicion del generador (altura)
-		MVector3(0, 0, 0),      // Offset minimo de posicion
-		mVector3D(60, 0, 60),   // Offset maximo de posicion (ancho y profundidad del cuadrado)
-		MVector3(0, -10, 0),    // Velocidad
-		MVector3(0, -40, 0),     // Offset minimo de la velocidad 
-		MVector3(0, 0, 0),      // Offset maximo de la velocidad a
-		MVector3(0, 0, 0),      // Aceleracion
-		MVector3(0, 0, 0),      // Offset minimo de la aceleracion
-		MVector3(0, 0, 0),      // Offset maximo de la maxima
-		2,                  // Tiempo de vida minimo
-		5,                  // Tiempo de vida maximo
-		true,                 // Activo
-		0.0,						//masa
-		Vector4(0.6, 0.7, 1.0, 1) // Color azul
-	);
-	pS->addParticleGen(pG2);
-	mPSystems.emplace("lluvia", pS);
-	pS->setActive(true);
+
+	//EL OTRO SISTEMA DE PARTICULAS REQUERIDO SE INICIA PULSANDO LA L Y SE PUEDE PAUSAR O REANUDAR CON LA K ES EL DE LLUVIA
+	//SE CREA EN INILLUVIA
 }

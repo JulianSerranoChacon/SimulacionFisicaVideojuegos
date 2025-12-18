@@ -24,8 +24,9 @@ using namespace physx;
 
 myScene::myScene(PxScene* gScene, PxPhysics* gPhysics): gScene(gScene), gPhysics(gPhysics)
 {
-	chooseScene(9);
-	//gameScene();
+	//chooseScene(9);
+	//PoyectoIntermedioScene();
+	GameScene();
 }
 
 myScene::~myScene()
@@ -502,7 +503,27 @@ void myScene::scene9()
 	mSolSys->addSolidGenerator(hose);
 }
 
-void myScene::gameScene()
+void myScene::GameScene()
+{
+	SolidStatic* suelo = new SolidStatic(gScene, gPhysics, CreateShape(PxBoxGeometry(200, 5, 200)), PxTransform(0, 0, 0), Vector4(1, 1, 0, 1));
+	mSolidsStatics.push_back(suelo);
+
+	SolidStatic* pared1 = new SolidStatic(gScene, gPhysics, CreateShape(PxBoxGeometry(200, 200, 5)), PxTransform(0, 0, 200), Vector4(1, 1, 0, 1));
+	mSolidsStatics.push_back(pared1);
+
+	SolidStatic* pared2 = new SolidStatic(gScene, gPhysics, CreateShape(PxBoxGeometry(200, 200, 5)), PxTransform(0, 0, -200), Vector4(1, 1, 0, 1));
+	mSolidsStatics.push_back(pared2);
+
+	SolidStatic* pared3 = new SolidStatic(gScene, gPhysics, CreateShape(PxBoxGeometry(5, 200, 200)), PxTransform(200, 0, 0), Vector4(1, 1, 0, 1));
+	mSolidsStatics.push_back(pared3);
+
+	SolidStatic* pared4 = new SolidStatic(gScene, gPhysics, CreateShape(PxBoxGeometry(5, 200, 200)), PxTransform(-200, 0, 0), Vector4(1, 1, 0, 1));
+	mSolidsStatics.push_back(pared4);
+
+
+}
+
+void myScene::PoyectoIntermedioScene()
 {
 	gravityForceGenerator* gG = new gravityForceGenerator(mVector3D(0, -9.8, 0));
 	WindForceGenerator* wG = new WindForceGenerator(mVector3D(5, 5, 0), 0.8f);

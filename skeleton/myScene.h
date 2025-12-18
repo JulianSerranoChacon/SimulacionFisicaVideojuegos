@@ -41,7 +41,8 @@ private:
 	void scene7();
 	void scene8();
 	void scene9();
-	void gameScene();
+	void GameScene();
+	void PoyectoIntermedioScene();
 	std::vector<RenderItem*> mItems;
 	std::vector<Particle*> mParticles;
 	std::vector<SolidStatic*> mSolidsStatics;

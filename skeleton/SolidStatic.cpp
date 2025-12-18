@@ -15,6 +15,7 @@ transform_(transform)
 
 SolidStatic::~SolidStatic()
 {
-	DeregisterRenderItem(rItem_);
+	if(rItem_ != nullptr)
+		DeregisterRenderItem(rItem_);
 	rItem_ = nullptr;
 }

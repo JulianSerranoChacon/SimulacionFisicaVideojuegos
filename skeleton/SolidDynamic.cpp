@@ -16,7 +16,9 @@ SolidDynamic::SolidDynamic(PxScene* gScene, PxPhysics* gPhysics, PxShape* shape,
 
 SolidDynamic::~SolidDynamic()
 {
-	DeregisterRenderItem(rItem);
+
+	if (rItem != nullptr)
+		DeregisterRenderItem(rItem);
 	rItem = nullptr;
 }
 

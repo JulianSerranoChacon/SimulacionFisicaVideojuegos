@@ -33,7 +33,6 @@ public:
 	void toggleMPSystems(std::string s);
 	void toggleMFG(std::string s);
 	void goal();
-	void createParticleSystemInGame();
 private:
 	void createAxis();
 	void chooseScene(int id);
@@ -53,6 +52,7 @@ private:
 	void createNewBall();
 	void createGoalP1();
 	void resetBall();
+	void createParticleSystemInGame();
 	void createStringMarker();
 	std::vector<RenderItem*> mItems;
 	std::vector<Particle*> mParticles;

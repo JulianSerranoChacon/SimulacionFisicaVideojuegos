@@ -683,7 +683,7 @@ void myScene::createNewBall()
 	);
 
 	// ---------- TRANSFORM ----------
-	Vector3 pos = Vector3(0, 20, 0);
+	Vector3 pos = Vector3(-30, 20, 0);
 	PxTransform transform(pos);
 
 	// ---------- OBJETO DINÁMICO ----------

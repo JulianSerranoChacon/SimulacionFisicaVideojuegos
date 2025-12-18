@@ -47,7 +47,7 @@ void uniformGenerator::generate(double t)
 		mVector3D accelVar(auxX, auxY, auxZ);
 
 		std::uniform_real_distribution<double> time(timeLifeMin, timeLifeMax);
-		listP.push_front(new ParticleGen(genPos + posVar, genVel + velVar, genAccel + accelVar, 0.5, time(random),5.0,sV));
+		listP.push_front(new ParticleGen(genPos + posVar, genVel + velVar, genAccel + accelVar, 0.5, time(random),1.0,sV));
 		nParticles++;
 	}
 }

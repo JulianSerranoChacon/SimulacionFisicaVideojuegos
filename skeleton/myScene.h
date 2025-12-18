@@ -33,6 +33,7 @@ public:
 	void stopMPSystems(std::string s);
 	void toggleMFG(std::string s);
 	void goal();
+	void createParticleSystemInGame();
 private:
 	void createAxis();
 	void chooseScene(int id);
@@ -66,4 +67,6 @@ private:
 	Goal* g1 = nullptr;
 	CollisionManager* cM = nullptr;
 	bool destroyBall = false;
+	ParticleSystem* fuegoG1 = nullptr;
+	SolidSystem* mangueraG1 = nullptr;
 };

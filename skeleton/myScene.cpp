@@ -21,7 +21,6 @@
 #include "NormalSolidGenerator.h"
 #include "ParticleWithMass.h"
 #include "Ball.h"
-#include <iostream>
 #include "Filters.h"
 #include "Goal.h"
 #include "CollisionManager.h"
@@ -559,6 +558,8 @@ void myScene::GameScene()
 	createNewBall();
 
 	createGoalP1();
+
+	createParticleSystemInGame();
 }
 
 void myScene::PoyectoIntermedioScene()
@@ -755,6 +756,56 @@ void myScene::toggleMFG(std::string s)
 
 void myScene::goal()
 {
-	std::cout << "Golaso\n";
 	destroyBall = true;
+	fuegoG1->setActive(true);
+}
+
+void myScene::createParticleSystemInGame()
+{
+	fuegoG1 = new ParticleSystem();
+
+	Vector3D pos(g1->getObj()->getGlobalPose().p.x, g1->getObj()->getGlobalPose().p.y,
+		g1->getObj()->getGlobalPose().p.z);
+	//fuego
+	NormalGeneratorWithForces* pG = new NormalGeneratorWithForces(
+		300, 0.003,                      // numero particulas, velocidad de emision
+		mVector3D(pos),					// Posicion
+		mVector3D(pos.getX() + 0.1, pos.getY() + 0.5, pos.getZ() + 0.1),           // Offset de la posicion
+		mVector3D(0, 8, 0),             // velocidad
+		mVector3D(0.2, 3, 0.2),             // Offset de la velocidad
+		MVector3(0, 2, 0),              // aceleracion
+		MVector3(0, 1, 0),              // Offset de la aceleracion
+		1, 3, 60,                       // vida minia, maxima y distancia
+		true,							// Active
+		0.0, 0.4,                       // media y desviacion
+		0.0,								//masa
+		Vector4(1, 0.5, 0, 1)           // color
+	);
+	fuegoG1->addParticleGen(pG);
+	mPSystems.emplace("fuego", fuegoG1);
+	fuegoG1->setActive(false);
+
+	ParticleSystem* pS = new ParticleSystem();
+	// Generador de lluvia
+	uniformGenerator* pG2 = new uniformGenerator(
+		100,                  // Ma ximo de particulas
+		0.07,                 // Tiempo entre emisiones
+		mVector3D(0, 100, 0),    // Posicion del generador (altura)
+		MVector3(0, 0, 0),      // Offset minimo de posicion
+		mVector3D(60, 0, 60),   // Offset maximo de posicion (ancho y profundidad del cuadrado)
+		MVector3(0, -10, 0),    // Velocidad
+		MVector3(0, -40, 0),     // Offset minimo de la velocidad 
+		MVector3(0, 0, 0),      // Offset maximo de la velocidad a
+		MVector3(0, 0, 0),      // Aceleracion
+		MVector3(0, 0, 0),      // Offset minimo de la aceleracion
+		MVector3(0, 0, 0),      // Offset maximo de la maxima
+		2,                  // Tiempo de vida minimo
+		5,                  // Tiempo de vida maximo
+		true,                 // Activo
+		0.0,						//masa
+		Vector4(0.6, 0.7, 1.0, 1) // Color azul
+	);
+	pS->addParticleGen(pG2);
+	mPSystems.emplace("lluvia", pS);
+	pS->setActive(true);
 }

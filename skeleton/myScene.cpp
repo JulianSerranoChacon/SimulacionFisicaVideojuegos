@@ -131,6 +131,12 @@ void myScene::moveCar(Vector3 moveDir)
 		mCar->move(moveDir);
 }
 
+void myScene::jumpCar()
+{
+	if (mCar != nullptr)
+		mCar->jump();
+}
+
 void myScene::createAxis()
 {
 	Vector3D<float> vR(20, 0, 0);
@@ -583,8 +589,11 @@ void myScene::configureCar()
 	double speed = 8000.0;
 	double maxSpeed = 9000.0;
 	double damping = 0.5;
+	double jumpForce = 16000;
+	double highHeight = 30;
 
-	mCar = new Car(gScene,gPhysics,carShape,startTransform,density,0.1,0.1,0.1,speed,maxSpeed,damping,carColor);
+	mCar = new Car(gScene,gPhysics,carShape,startTransform,density,0.1,0.1,0.1,speed,maxSpeed,damping,jumpForce,highHeight,
+		carColor);
 
 	NormalGeneratorWithForces* pG = new NormalGeneratorWithForces(
 		300, 0.003,                      // numero particulas, velocidad de emision

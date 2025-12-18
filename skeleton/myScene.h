@@ -24,6 +24,7 @@ public:
 
 	void Shoot(physx::PxVec3 camPos, physx::PxVec3 camDir);
 	void moveCar(Vector3 moveDir);
+	void jumpCar();
 	void toggleTurbo();
 	void iniLLuvia();
 	void stopMPSystems(std::string s);

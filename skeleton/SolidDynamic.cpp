@@ -53,4 +53,6 @@ void SolidDynamic::integrate(double t) {
 			obj->addForce(fg->addForce(this).toVector3(), PxForceMode::eIMPULSE, true);
 		}
 	}
+
+	transform = obj->getGlobalPose();
 }

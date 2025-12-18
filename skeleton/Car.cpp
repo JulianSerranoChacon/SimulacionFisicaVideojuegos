@@ -4,8 +4,9 @@
 
 Car::Car(PxScene* gScene, PxPhysics* gPhysics, PxShape* shape, PxTransform& transform, double density,
     double staticFriction, double dynamicFriction, double restitution, double speed, double maxSpeed, double damping,
-    Vector4& color) :SolidDynamic(gScene, gPhysics, shape, transform, density, staticFriction, dynamicFriction, restitution, -1, color),
-    speed(speed), maxSpeed(maxSpeed), moveDir(0), damping(damping)
+    double jumpForce, double highHeight, Vector4& color):
+    SolidDynamic(gScene, gPhysics, shape, transform, density, staticFriction, dynamicFriction, restitution, -1, color),
+    speed(speed), maxSpeed(maxSpeed), moveDir(0), damping(damping), jumpForce(jumpForce), highHeight(highHeight)
 {
 
     obj->setLinearDamping(damping);
@@ -40,6 +41,7 @@ void Car::integrate(double t)
     // Si quieres frenar lentamente al soltar teclas:
     moveDir *= damping;
 
+    transform = obj->getGlobalPose();
 }
 
 void Car::applyMove(Vector3& dir, double t)
@@ -59,8 +61,6 @@ void Car::applyMove(Vector3& dir, double t)
     }
 
     obj->addForce(desVel * 10000);
-    obj->addTorque(desVel * 10000);
-
 }
 
 
@@ -68,4 +68,10 @@ void Car::applyMove(Vector3& dir, double t)
 void Car::move(const Vector3& direction)
 {
     moveDir += direction;
+}
+
+void Car::jump()
+{
+    if(transform.p.y < highHeight)
+        obj->addForce(Vector3(0,jumpForce,0) * 10000);
 }

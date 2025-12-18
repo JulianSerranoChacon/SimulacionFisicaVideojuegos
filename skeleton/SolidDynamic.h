@@ -16,12 +16,12 @@ public:
 		double staticFriction, double dynamicFriction, double restitution, float maxtimeLife, Vector4& color = Vector4(1));
 	~SolidDynamic();
 	bool updateTimeLife(double t);
-	void integrate(double t);
+	virtual void integrate(double t);
 	inline PxRigidDynamic* getObject() { return obj; }
 	inline Vector3 getPos() { return transform.p; }
 	inline virtual void addForceGenerator(ForceGenerator* fg) { fG.push_back(fg); }
 
-private:
+protected:
 	void createObj(PxScene* gScene, PxShape* shape, PxTransform& transform, double density, double staticFriction, double dynamicFriction,
 		double restitution, Vector4& color = Vector4(1));
 

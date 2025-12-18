@@ -43,6 +43,7 @@ private:
 	void scene9();
 	void GameScene();
 	void PoyectoIntermedioScene();
+	void configureCar();
 	std::vector<RenderItem*> mItems;
 	std::vector<Particle*> mParticles;
 	std::vector<SolidStatic*> mSolidsStatics;
@@ -50,7 +51,7 @@ private:
 	std::map<std::string, ParticleSystem*> mPSystems;
 	std::map<std::string, ForceGenerator*> mFG;
 	std::map<std::string, SolidSystem*> mSSystems;
-	Car* mCar;
-	PxScene* gScene;
-	PxPhysics* gPhysics;
+	Car* mCar = nullptr;
+	PxScene* gScene = nullptr;
+	PxPhysics* gPhysics = nullptr;
 };

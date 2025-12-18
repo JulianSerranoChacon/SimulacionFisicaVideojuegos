@@ -1,24 +1,26 @@
 #pragma once
-#include "ParticleWithMass.h"
 #include "ParticleSystem.h"
-#include "gravityForceGenerator.h"
+#include "SolidDynamic.h"
 class Proyectil;
-class Car : public ParticleWithMass
+class Car : public SolidDynamic
 {
 public:
-	Car(MVector3 pos, MVector3 moveDir, double speed, float dumping, float mass, float timeLife, float sizeX, float sizeY, float sizeZ, Vector4 sV);
+	Car(PxScene* gScene, PxPhysics* gPhysics, PxShape* shape, PxTransform& transform, double density,
+		double staticFriction, double dynamicFriction, double restitution, double speed,double maxSpeed, double damping,
+		Vector4& color = Vector4(1));
 	~Car();
-	inline virtual void setForceToAply(mVector3D f) {for (ForceGenerator* fg : fG) if (fg != nullptr)fg->setForceToAply(f);}
 	virtual Proyectil* shoot();
 	virtual void integrate(double t) override;
-	virtual void move(Vector3);
+	virtual void applyMove(Vector3& dir, double t);
+	virtual void move(const Vector3& dir);
 	inline void setPS(ParticleSystem* p) { pS = p; }
 	inline void setPSActive(bool active) { pS->setActive(active); }
 	inline bool isPSActive() { return pS->getActive(); }
 protected:
-	MVector3 moveDir;
+	Vector3 moveDir;
 	ParticleSystem* pS = nullptr;
 	double speed;
-	float size;
+	double damping;
+	double maxSpeed;
 };
 

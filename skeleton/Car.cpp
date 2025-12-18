@@ -1,9 +1,20 @@
-#include "Car.h"
+ï»¿#include "Car.h"
 #include "Proyectil.h"
+#include <cmath>
 
-Car::Car(MVector3 pos, MVector3 moveDir, double speed, float dumping, float mass, float timeLife, float sizeX,float sizeY,float sizeZ, Vector4 sV):
-	ParticleWithMass(pos, MVector3(0,0,0), MVector3(0, 0, 0), dumping, mass, timeLife,size, CreateShape(physx::PxBoxGeometry(sizeX, sizeY, sizeZ)), sv), moveDir(0,0,0), speed(speed)
+Car::Car(PxScene* gScene, PxPhysics* gPhysics, PxShape* shape, PxTransform& transform, double density,
+    double staticFriction, double dynamicFriction, double restitution, double speed, double maxSpeed, double damping,
+    Vector4& color) :SolidDynamic(gScene, gPhysics, shape, transform, density, staticFriction, dynamicFriction, restitution, -1, color),
+    speed(speed), maxSpeed(maxSpeed), moveDir(0), damping(damping)
 {
+
+    obj->setLinearDamping(damping);
+    obj->setAngularDamping(damping);
+    obj->setRigidDynamicLockFlags(PxRigidDynamicLockFlag::eLOCK_ANGULAR_X | PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z);
+
+    PxTransform cm = obj->getCMassLocalPose();
+    cm.p.y *= 0.5f;
+    obj->setCMassLocalPose(cm);
 }
 
 Car::~Car()
@@ -12,35 +23,49 @@ Car::~Car()
 
 Proyectil* Car::shoot()
 {
-    return new Proyectil(Vector3D<float>(pose_.p.x, pose_.p.y, pose_.p.z), Vector3D<float>(0, 0, 250),
+    return new Proyectil(Vector3D<float>(transform.p.x, transform.p.y, transform.p.z), Vector3D<float>(0, 0, 250),
         Vector3D<float>(0, 0, 0), 0.2, 20, 9.8,
-        Vector3D<float>(100, 100, 100) * vel_.normalize() + Vector3D<float>(0, 50,0));
+        Vector3D<float>(100, 100, 100) * obj->getLinearVelocity().normalize() + Vector3D<float>(0, 50, 0));
 }
 
 void Car::integrate(double t)
 {
-	vel_ = moveDir.scalar(speed);
-	ParticleWithMass::integrate(t);
-	if (pS != nullptr)
-		pS->moveTo(pose_.p);
+    // Aplicar fuerzas externas (gravedad, etc.)
+    for (auto fg : fG)
+        fg->addForce(this);
+
+    // Aplicamos movimiento suave basado en inputs acumulados
+    applyMove(moveDir, t);
+
+    // Si quieres frenar lentamente al soltar teclas:
+    moveDir *= damping;
+
+}
+
+void Car::applyMove(Vector3& dir, double t)
+{
+    if (!obj)
+        return;
+
+    Vector3 actVel = obj->getLinearVelocity();
+
+    if(abs(actVel.magnitude()) > maxSpeed)
+        return;
+
+    Vector3 desVel = moveDir * speed;
+    if (abs(desVel.magnitude()) > maxSpeed){
+        desVel.normalize();
+        desVel *= maxSpeed;
+    }
+
+    obj->addForce(desVel * 10000);
+    obj->addTorque(desVel * 10000);
 
 }
 
 
-void Car::move(Vector3 dir)
+
+void Car::move(const Vector3& direction)
 {
-      // Dirección deseada (normalizada)
-      mVector3D desiredDir(dir.x, dir.y, dir.z);
-     desiredDir.normalize();
-
-     // Velocidad deseada
-     mVector3D desiredVel = desiredDir.scalar(speed);
-
-     // Interpolamos suavemente la velocidad actual hacia la deseada
-     // (ajusta el factor 0.1f para más o menos suavidad)
-    // Interpolación (ajusta el factor 0.1f para más/menos suavidad)
-    vel_ = vel_.scalar(0.9f) + desiredVel.scalar(0.4f);
-
-    // Actualiza la dirección del movimiento
-    moveDir = desiredDir;
+    moveDir += direction;
 }

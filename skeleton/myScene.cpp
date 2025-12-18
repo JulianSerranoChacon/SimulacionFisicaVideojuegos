@@ -19,6 +19,7 @@
 #include "SolidGenerator.h"
 #include "uniformSolidGenerator.h"
 #include "NormalSolidGenerator.h"
+#include "ParticleWithMass.h"
 
 using namespace physx;
 
@@ -74,6 +75,8 @@ myScene::~myScene()
 			delete e.second;
 		e.second = nullptr;
 	}
+	if (mCar != nullptr)
+		delete mCar;
 }
 
 void myScene::update(float t)
@@ -89,6 +92,9 @@ void myScene::update(float t)
 	for (auto SS : mSSystems)
 		if(SS.second != nullptr)
 			SS.second->update(t);
+
+	if (mCar != nullptr);
+		mCar->integrate(t);
 }
 
 void myScene::Shoot(physx::PxVec3 camPos, physx::PxVec3 camDir)
@@ -520,6 +526,8 @@ void myScene::GameScene()
 	SolidStatic* pared4 = new SolidStatic(gScene, gPhysics, CreateShape(PxBoxGeometry(5, 200, 200)), PxTransform(-200, 0, 0), Vector4(1, 1, 0, 1));
 	mSolidsStatics.push_back(pared4);
 
+	configureCar();
+
 
 }
 
@@ -551,10 +559,52 @@ void myScene::PoyectoIntermedioScene()
 	);
 	myPS->addParticleGen(pG);
 	myPS->setActive(false);
-	mCar = new Car(MVector3(0, 0, 0), MVector3(0, 0, 0), 40, 0.5, 30, -1, 5, 3, 4, Vector4(0.0, 0.0, 1.0, 1.0));
+	//mCar = new Car(MVector3(0, 0, 0), MVector3(0, 0, 0), 40, 0.5, 30, -1, 5, 3, 4, Vector4(0.0, 0.0, 1.0, 1.0));
 	pG->addForceGenerator(wG);
 	mCar->setPS(myPS);
-	mParticles.push_back(mCar);
+	//mParticles.push_back(mCar);
+}
+
+void myScene::configureCar()
+{
+	// Crear geometría y material
+	PxBoxGeometry carGeom(2.0f, 1.0f, 4.0f);  // ancho, alto, largo
+	PxMaterial* carMaterial = gPhysics->createMaterial(0.6f, 0.4f, 0.1f); // staticFric, dynFric, restitution
+	PxShape* carShape = gPhysics->createShape(carGeom, *carMaterial);
+
+	// Transform inicial (posición y orientación)
+	PxTransform startTransform(PxVec3(0, 6.1f, 0), PxQuat(PxIdentity));
+
+	// Color del coche
+	Vector4 carColor(0.8f, 0.0f, 0.0f, 1.0f); // rojo
+
+	// Crear el coche
+	double density = 1200.0;
+	double speed = 8000.0;
+	double maxSpeed = 9000.0;
+	double damping = 0.5;
+
+	mCar = new Car(gScene,gPhysics,carShape,startTransform,density,0.1,0.1,0.1,speed,maxSpeed,damping,carColor);
+
+	NormalGeneratorWithForces* pG = new NormalGeneratorWithForces(
+		300, 0.003,                      // numero particulas, velocidad de emision
+		mVector3D(0, 0, 0),             // Posicion
+		mVector3D(1, 0.5, 1),           // Offset de la posicion
+		mVector3D(0, 0, 8),             // velocidad
+		mVector3D(2, 3, 2),             // Offset de la velocidad
+		MVector3(0, 0, 2),              // aceleracion
+		MVector3(0, 0, 1),              // Offset de la aceleracion
+		1, 3, 60,                       // vida minia, maxima y distancia
+		true,							// Active
+		0.0, 0.4,                       // media y desviacion
+		50,								//masa
+		Vector4(1, 0.5, 0, 1)           // color
+	);
+
+	ParticleSystem* myPS = new ParticleSystem();
+	myPS->addParticleGen(pG);
+	myPS->setActive(false);
+	mCar->setPS(myPS);
 }
 
 void myScene::toggleTurbo()

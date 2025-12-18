@@ -138,7 +138,6 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		break;
 	}
 	default:
-
 		mScene->moveCar(Vector3(0, 0, 0));
 		break;
 	}

@@ -749,6 +749,10 @@ void myScene::toggleTurbo()
 
 void myScene::iniLLuvia()
 {
+	gravityForceGenerator* gG = new gravityForceGenerator(mVector3D(0, -9.8, 0));
+	WindForceGenerator* wG = new WindForceGenerator(mVector3D(5, 5, 0), 0.8f);
+	mFG.emplace("gravedad", gG);
+	mFG.emplace("viento", wG);
 	ParticleSystem* myPS = new ParticleSystem();
 	mPSystems.emplace("lluvia", myPS);
 	// Generador de lluvia

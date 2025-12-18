@@ -37,6 +37,7 @@ void SolidDynamic::createObj(PxScene* gScene, PxShape* shape, PxTransform& trans
 	if (shape == nullptr)
 		shape = CreateShape(PxBoxGeometry(100, 30, 100), material);
 
+	shape->setMaterials(&material, 1);
 	obj->attachShape(*shape);
 	gScene->addActor(*obj);
 

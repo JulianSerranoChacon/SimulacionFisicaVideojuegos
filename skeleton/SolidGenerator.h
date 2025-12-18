@@ -9,8 +9,9 @@ class SolidGenerator
 {
 public:
 	SolidGenerator(PxScene* gScene, PxPhysics* gPhysics, int maxParticles, double emisionVel, Vector3 genPos, Vector3 genPosOffset,
-		Vector3 genVel, Vector3 genVelOffset,Vector3 genAngVel, Vector3 genAccelOffset, double staticFriction, double dynamicFriction,
-		double restitution, double timeLifeMin, double timeLifeMax, double maxDistance, bool active, Vector4 sV);
+		Vector3 genVel, Vector3 genVelOffset,Vector3 genAngVel, Vector3 genAngVelOffset, double staticFrictionMin, double dynamicFrictionMin,
+		double restitutionMin, double staticFrictionMax, double dynamicFrictionMax,double restitutionMax, double timeLifeMin,
+		double timeLifeMax, double maxDistance, bool active, float density, PxShape* shape, Vector4 sV);
 	virtual ~SolidGenerator();
 	virtual void update(double t);
 	virtual void generate(double t) = 0;
@@ -37,8 +38,15 @@ protected:
 	Vector4 sV;
 	PxScene* gScene;
 	PxPhysics* gPhysics;
-	double staticFriction;
-	double dynamicFriction;
-	double restitution;
+	double staticFrictionMax;
+	double dynamicFrictionMax;
+	double restitutionMax;
+
+	double staticFrictionMin;
+	double dynamicFrictionMin;
+	double restitutionMin;
+
+	PxShape* shape;
+	double density;
 };
 

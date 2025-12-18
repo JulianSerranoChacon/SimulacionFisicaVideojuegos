@@ -1,4 +1,4 @@
-#include "MyScene.h"
+Ôªø#include "MyScene.h"
 #include "Vector3D.h"
 #include "Particle.h"
 #include "Proyectil.h"
@@ -18,6 +18,7 @@
 #include "SolidSystem.h"
 #include "SolidGenerator.h"
 #include "uniformSolidGenerator.h"
+#include "NormalSolidGenerator.h"
 
 using namespace physx;
 
@@ -91,13 +92,13 @@ void myScene::update(float t)
 
 void myScene::Shoot(physx::PxVec3 camPos, physx::PxVec3 camDir)
 {
-	// Normalizamos la direcciÛn de la c·mara
+	// Normalizamos la direcci√≥n de la c√°mara
 	camDir.normalize();
 
 	// Velocidad del proyectil
 	float projectileSpeed = 250.0f;
 
-	// Calculamos la velocidad inicial en direcciÛn de la c·mara
+	// Calculamos la velocidad inicial en direcci√≥n de la c√°mara
 	Vector3D<float> initialVelocity(camDir.x * projectileSpeed,
 		camDir.y * projectileSpeed,
 		camDir.z * projectileSpeed);
@@ -403,42 +404,67 @@ void myScene::scene8()
 	UniformSolidGenerator* rain = new UniformSolidGenerator(
 		gScene,
 		gPhysics,
-		5000,                 // maxParticles
-		0.07,                 // emisionVel
-		Vector3(0, 500, 0),    // genPos
+		5000,                  // maxParticles
+		0.07,                  // emisionVel
+		Vector3(0, 500, 0),   // genPos
 
-		// PosiciÛn aleatoria
+		// Posici√≥n aleatoria
 		Vector3(-500, 0, -500), // genPosOffsetMin
-		Vector3(500, 5, 500), // genPosOffsetMax
+		Vector3(500, 5, 500),   // genPosOffsetMax
 
 		// Velocidad
-		Vector3(0, -30, 0),   // genVel
-		Vector3(-1, -5, -1),  // genVelOffsetMin
-		Vector3(1, 0, 1),  // genVelOffsetMax
+		Vector3(0, -30, 0),      // genVel
+		Vector3(-1, -5, -1),     // genVelOffsetMin
+		Vector3(1, 0, 1),        // genVelOffsetMax
 
 		// Velocidad angular
-		Vector3(0, 0, 0),
-		Vector3(0, 0, 0),
-		Vector3(0, 0, 0),
+		Vector3(0, 0, 0),        // genAngVel
+		Vector3(0, 0, 0),        // genAngVelOffsetMin
+		Vector3(0, 0, 0),        // genAngVelOffsetMax
 
 		// Material
-		0.0,   // static friction
-		0.0,   // dynamic friction
-		0.05,  // restitution
+		0.0, 0.0, 0.05,          // staticFrictionMin, dynamicFrictionMin, restitutionMin
+		0.0, 0.0, 0.05,          // staticFrictionMax, dynamicFrictionMax, restitutionMax
 
 		// Vida
-		4.0,
-		6.0,
+		4.0, 6.0,                // timeLifeMin, timeLifeMax
 
-		// Distancia m·xima
-		1000.0,
+		// Distancia m√°xima
+		1000.0,                  // maxDistance
 
-		true,          // active
-		1000.0f,       // density (agua)
+		true,                     // active
+		1000.0f,                  // density
+
+		CreateShape(PxSphereGeometry(3.0)),              // PxShape*
 		Vector4(0.5, 0.5, 1.0, 1.0) // color
 	);
 
+	NormalSolidGenerator* hose = new NormalSolidGenerator(
+		0.0, 0.0,           // media, desviacion (casi cero para evitar error)
+		gScene,
+		gPhysics,
+		2000,                   // maxParticles
+		0.2,                  // emisionVel
+		Vector3(0, 1.2f, 0),    // genPos (boquilla)
+		Vector3(0, 0, 0),       // genPosOffset (sin variacion)
+		Vector3(0, 0, 40),      // genVel (direccion fija)
+		Vector3(0, 0, 0),       // genVelOffset (sin variacion)
+		Vector3(0, 0, 0),       // genAngVel
+		Vector3(0, 0, 0),       // genAngVelOffset
+		0.0, 0.0, 0.05,         // staticFrictionMin, dynamicFrictionMin, restitutionMin
+		0.0, 0.0, 0.05,         // staticFrictionMax, dynamicFrictionMax, restitutionMax
+		1.5, 2.5,               // timeLifeMin, timeLifeMax
+		100.0,                  // maxDistance
+		true,                   // active
+		1000.0f,                // density (agua)
+		CreateShape(PxSphereGeometry(3)),  // shape
+		Vector4(0.4f, 0.6f, 1.0f, 1.0f)                          // color
+	);
+
+
+
 	mSolSys->addSolidGenerator(rain);
+	mSolSys->addSolidGenerator(hose);
 }
 
 void myScene::gameScene()

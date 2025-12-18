@@ -264,6 +264,7 @@
     <ClCompile Include="myScene.cpp" />
     <ClCompile Include="NormalGenerator.cpp" />
     <ClCompile Include="NormalGeneratorWithForces.cpp" />
+    <ClCompile Include="NormalSolidGenerator.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleGen.cpp" />
     <ClCompile Include="ParticleGenerator.cpp" />
@@ -295,6 +296,7 @@
     <ClInclude Include="myScene.h" />
     <ClInclude Include="NormalGenerator.h" />
     <ClInclude Include="NormalGeneratorWithForces.h" />
+    <ClInclude Include="NormalSolidGenerator.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleGen.h" />
     <ClInclude Include="ParticleGenerator.h" />

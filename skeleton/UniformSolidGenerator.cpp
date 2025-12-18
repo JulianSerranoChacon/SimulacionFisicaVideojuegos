@@ -1,13 +1,15 @@
 #include "UniformSolidGenerator.h"
 
-UniformSolidGenerator::UniformSolidGenerator(PxScene* gScene, PxPhysics* gPhysics,int maxParticles, double emisionVel, Vector3 genPos,
+UniformSolidGenerator::UniformSolidGenerator(PxScene* gScene, PxPhysics* gPhysics, int maxParticles, double emisionVel, Vector3 genPos,
 	Vector3 genPosOffsetMin, Vector3 genPosOffsetMax, Vector3 genVel, Vector3 genVelOffsetMin, Vector3 genVelOffsetMax,
-	Vector3 genAngVel, Vector3 genAngVelOffsetMin, Vector3 genAngVelOffsetMax, double staticFriction, double dynamicFriction, double restitution,
-	double timeLifeMin, double timeLifeMax, double maxDistance, bool active,float density, Vector4 sV):
-	SolidGenerator(gScene,gPhysics,maxParticles,emisionVel,genPos,genPosOffsetMax,
-		genVel,genAngVelOffsetMax,genAngVel,genAngVelOffsetMax,staticFriction, dynamicFriction, restitution, timeLifeMin,
-		timeLifeMax,maxDistance,active,sV),genPosOffsetMin(genPosOffsetMin),
-	genVelOffsetMin(genVelOffsetMin), genAngVelOffsetMin(genAngVelOffsetMin), mass(density)
+	Vector3 genAngVel, Vector3 genAngVelOffsetMin, Vector3 genAngVelOffsetMax, double staticFrictionMin, double dynamicFrictionMin,
+	double restitutionMin, double staticFrictionMax, double dynamicFrictionMax, double restitutionMax, double timeLifeMin, double timeLifeMax,
+	double maxDistance, bool active, float density, PxShape* shape, Vector4 sV) :
+	SolidGenerator(gScene, gPhysics, maxParticles, emisionVel, genPos, genPosOffsetMax,
+		genVel, genAngVelOffsetMax, genAngVel, genAngVelOffsetMax, staticFrictionMin, dynamicFrictionMin, restitutionMin,
+		staticFrictionMax, dynamicFrictionMax, restitutionMax, timeLifeMin,
+		timeLifeMax, maxDistance, active,density, shape, sV), genPosOffsetMin(genPosOffsetMin),
+	genVelOffsetMin(genVelOffsetMin), genAngVelOffsetMin(genAngVelOffsetMin)
 {
 	std::random_device randomDevice;
 	random = std::mt19937(randomDevice());
@@ -49,9 +51,20 @@ void UniformSolidGenerator::generate(double t)
 
 		std::uniform_real_distribution<double> time(timeLifeMin, timeLifeMax);
 		double timeVar = time(random);
+
+		std::uniform_real_distribution<double> staticFR(staticFrictionMin, staticFrictionMax);
+		double staticFVar = staticFR(random);
+
+
+		std::uniform_real_distribution<double> dynamicFR(dynamicFrictionMin, dynamicFrictionMax);
+		double dynamicFVar = dynamicFR(random);
+
+		std::uniform_real_distribution<double> restitutionR(restitutionMin, restitutionMax);
+		double restitutionVar = restitutionR(random);
+
 		//ParticleWithMass* p = new ParticleWithMass(genPos + posVar, genVel + velVar, genAccel + accelVar, 0.5, mass, time(random), 0.5, sV);
-		SolidDynamic* s = new SolidDynamic(gScene,gPhysics,CreateShape(PxSphereGeometry(30)), PxTransform(genPos + posVar),mass,
-			staticFriction,dynamicFriction, restitution,timeVar,sV);
+		SolidDynamic* s = new SolidDynamic(gScene,gPhysics,shape, PxTransform(genPos + posVar), density,
+			staticFVar, dynamicFVar, restitutionVar,timeVar, sV);
 		s->getObject()->setLinearVelocity(genVel + velVar);
 		s->getObject()->setAngularVelocity(genAngVel + nAngVelVar);
 		

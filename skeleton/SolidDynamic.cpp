@@ -58,7 +58,7 @@ void SolidDynamic::createObj(PxScene* gScene, PxShape* shape, PxTransform& trans
 void SolidDynamic::integrate(double t) {
 	for (ForceGenerator* fg : fG) {
 		if (fg != nullptr) {
-			obj->addForce(fg->addForce(this).toVector3(), PxForceMode::eIMPULSE, true);
+			obj->addForce(fg->addForce(this).toVector3() / obj->getMass() * t, PxForceMode::eIMPULSE, true);
 		}
 	}
 

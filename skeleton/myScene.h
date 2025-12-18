@@ -53,6 +53,7 @@ private:
 	void createNewBall();
 	void createGoalP1();
 	void resetBall();
+	void createStringMarker();
 	std::vector<RenderItem*> mItems;
 	std::vector<Particle*> mParticles;
 	std::vector<SolidStatic*> mSolidsStatics;
@@ -70,4 +71,7 @@ private:
 	ParticleSystem* fuegoG1 = nullptr;
 	SolidSystem* mangueraG1 = nullptr;
 	SolidSystem* hoseG1 = nullptr;
+	float maxTimeParts = 10;
+	float timeParts = 10;
+	bool isGoal = false;
 };

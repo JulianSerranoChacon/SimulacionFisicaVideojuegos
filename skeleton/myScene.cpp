@@ -111,11 +111,27 @@ void myScene::update(float t)
 		if(SS.second != nullptr)
 			SS.second->update(t);
 
+	for (int i = 0; i < mSolidDynamics.size(); i++) {
+		if (mSolidDynamics[i] != nullptr) {
+			mSolidDynamics[i]->integrate(t);
+		}
+	}
+
 	if (mCar != nullptr);
 		mCar->integrate(t);
 
-	if (destroyBall)
+		if (destroyBall) {
 		resetBall();
+		}
+
+		if (isGoal && timeParts < maxTimeParts) {
+			timeParts += t;
+		}
+		if (isGoal && timeParts >= maxTimeParts) {
+			isGoal = false;
+			fuegoG1->setActive(false);
+			hoseG1->setActive(false);
+		}
 }
 
 void myScene::Shoot(physx::PxVec3 camPos, physx::PxVec3 camDir)
@@ -560,6 +576,8 @@ void myScene::GameScene()
 	createGoalP1();
 
 	createParticleSystemInGame();
+
+	createStringMarker();
 }
 
 void myScene::PoyectoIntermedioScene()
@@ -702,6 +720,28 @@ void myScene::resetBall()
 	destroyBall = false;
 }
 
+void myScene::createStringMarker()
+{
+	SolidDynamic* marker = new SolidDynamic(gScene, gPhysics, CreateShape(PxBoxGeometry(20, 20, 5)), PxTransform(0, 100, 180),0.001,5.0,
+		5.0,0.0,Vector4(1, 0.5, 0, 1));
+	mSolidDynamics.push_back(marker);
+
+	marker->getObject()->setRigidDynamicLockFlags(
+		PxRigidDynamicLockFlag::eLOCK_LINEAR_X |PxRigidDynamicLockFlag::eLOCK_LINEAR_Z | PxRigidDynamicLockFlag::eLOCK_ANGULAR_X |
+		PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y |PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z);
+
+
+	ParticleWithMass* pstatic = new ParticleWithMass(mVector3D(marker->getPos().x, marker->getPos().y, marker->getPos().z) + mVector3D(0.0, 50, 0.0),
+		{0.0,0.0,0.0}, {0.0,0.0,0.0}, 0.4, 0, 1000, 2);
+	mParticles.push_back(pstatic);
+
+	SpringForceGenerator* string = new SpringForceGenerator(150, 1, pstatic);
+	marker->addForceGenerator(string);
+
+
+	mFG.emplace("muelleMarker", string);
+}
+
 void myScene::toggleTurbo()
 {
 	mCar->setPSActive(!mCar->isPSActive());
@@ -760,6 +800,8 @@ void myScene::goal()
 	destroyBall = true;
 	fuegoG1->setActive(true);
 	hoseG1->setActive(true);
+	timeParts = 0;
+	isGoal = true;
 }
 
 void myScene::createParticleSystemInGame()

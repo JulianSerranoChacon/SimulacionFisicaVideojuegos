@@ -8,6 +8,8 @@ public:
 	SpringForceGenerator(double k, double resting_lenght, ParticleWithMass* other);
 
 	virtual mVector3D addForce(ParticleWithMass* p);
+	virtual mVector3D addForce(SolidDynamic* s) override;
+
 
 	inline virtual void setK(double nK) { k = nK; };
 

@@ -1,8 +1,11 @@
 #pragma once
 #include "Vector3D.h"
+#include <PxPhysicsAPI.h>
 #include <vector>
 using mVector3D = Vector3D<float>;
 class ParticleWithMass;
+class SolidDynamic;
+using namespace physx;
 class ForceGenerator
 {
 public:
@@ -12,6 +15,7 @@ public:
 	inline virtual void setActive(bool a) { active = a; }
 	inline virtual bool getActive() { return active; }
 	virtual mVector3D addForce(ParticleWithMass* p) = 0;
+	virtual mVector3D addForce(SolidDynamic* s) = 0;
 	inline virtual void setForceToAply(mVector3D f) { forceToAply = f; }
 protected:
 	mVector3D forceToAply;

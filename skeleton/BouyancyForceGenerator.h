@@ -1,10 +1,12 @@
 #pragma once
 #include "ForceGenerator.h"
+
 class BouyancyForceGenerator : public ForceGenerator
 {
 public:
 	BouyancyForceGenerator(float h, float v, float d, ParticleWithMass* liquid);
 	virtual mVector3D addForce(ParticleWithMass* p) override;
+	virtual mVector3D addForce(SolidDynamic* s) override;
 
 	virtual ~BouyancyForceGenerator();
 protected:

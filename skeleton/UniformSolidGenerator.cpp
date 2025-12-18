@@ -56,8 +56,8 @@ void UniformSolidGenerator::generate(double t)
 		s->getObject()->setAngularVelocity(genAngVel + nAngVelVar);
 		
 
-		//for(ForceGenerator* f : fG)
-			//s->addForceGenerator(f);
+		for(ForceGenerator* f : fG)
+			s->addForceGenerator(f);
 
 		listS.push_front(s);
 		nParticles++;

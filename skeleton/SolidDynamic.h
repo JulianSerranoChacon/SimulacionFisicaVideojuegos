@@ -2,6 +2,8 @@
 
 #include <PxPhysicsAPI.h>
 #include "RenderUtils.hpp"
+#include "ForceGenerator.h"
+#include <list>
 
 
 using namespace physx;
@@ -16,6 +18,8 @@ public:
 	bool updateTimeLife(double t);
 	void integrate(double t);
 	inline PxRigidDynamic* getObject() { return obj; }
+	inline Vector3 getPos() { return transform.p; }
+	inline virtual void addForceGenerator(ForceGenerator* fg) { fG.push_back(fg); }
 
 private:
 	void createObj(PxScene* gScene, PxShape* shape, PxTransform& transform, double density, double staticFriction, double dynamicFriction,
@@ -27,5 +31,6 @@ private:
 	RenderItem* rItem;
 	double timeLife;
 	double maxTimeLife;
+	std::list<ForceGenerator*> fG;
 };
 

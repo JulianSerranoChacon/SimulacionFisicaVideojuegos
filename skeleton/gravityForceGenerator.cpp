@@ -17,3 +17,9 @@ mVector3D gravityForceGenerator::addForce(ParticleWithMass* p)
 	mVector3D accel = forceToAply * p->getMass();
 	return accel;
 }
+
+mVector3D gravityForceGenerator::addForce(SolidDynamic* s)
+{
+
+	return mVector3D(0,0,0);
+}

@@ -692,7 +692,13 @@ void myScene::createGoalP1()
 
 void myScene::resetBall()
 {
-	mBall->getObject()->setGlobalPose(PxTransform(0, 40, 0));
+	//if (mBall != nullptr) {
+		//delete mBall;
+		//mBall = nullptr;
+	//}
+
+	//createNewBall();
+	mBall->getObject()->setGlobalPose(PxTransform(0,40,0));
 	destroyBall = false;
 }
 

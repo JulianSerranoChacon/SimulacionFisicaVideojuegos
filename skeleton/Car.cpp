@@ -11,7 +11,8 @@ Car::Car(PxScene* gScene, PxPhysics* gPhysics, PxShape* shape, PxTransform& tran
 
     obj->setLinearDamping(damping);
     obj->setAngularDamping(damping);
-    obj->setRigidDynamicLockFlags(PxRigidDynamicLockFlag::eLOCK_ANGULAR_X | PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z);
+    obj->setRigidDynamicLockFlags(PxRigidDynamicLockFlag::eLOCK_ANGULAR_X | PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y |
+        PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z);
 
     PxTransform cm = obj->getCMassLocalPose();
     cm.p.y *= 0.5f;

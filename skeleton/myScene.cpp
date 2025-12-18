@@ -21,6 +21,10 @@
 #include "NormalSolidGenerator.h"
 #include "ParticleWithMass.h"
 #include "Ball.h"
+#include <iostream>
+#include "Filters.h"
+#include "Goal.h"
+#include "CollisionManager.h"
 
 using namespace physx;
 
@@ -28,6 +32,8 @@ myScene::myScene(PxScene* gScene, PxPhysics* gPhysics): gScene(gScene), gPhysics
 {
 	//chooseScene(9);
 	//PoyectoIntermedioScene();
+	cM = new CollisionManager(this); //para la escena de juego
+	gScene->setSimulationEventCallback(cM);
 	GameScene();
 }
 
@@ -76,11 +82,20 @@ myScene::~myScene()
 			delete e.second;
 		e.second = nullptr;
 	}
-	if (mCar != nullptr)
+	if (mCar != nullptr) {
 		delete mCar;
+		mCar = nullptr;
+	}
 
-	if (mBall != nullptr)
+	if (mBall != nullptr) {
 		delete mBall;
+		mBall = nullptr;
+	}
+
+	if (g1 != nullptr) {
+		delete g1;
+		g1 = nullptr;
+	}
 }
 
 void myScene::update(float t)
@@ -99,6 +114,9 @@ void myScene::update(float t)
 
 	if (mCar != nullptr);
 		mCar->integrate(t);
+
+	if (destroyBall)
+		resetBall();
 }
 
 void myScene::Shoot(physx::PxVec3 camPos, physx::PxVec3 camDir)
@@ -539,6 +557,8 @@ void myScene::GameScene()
 	configureCar();
 
 	createNewBall();
+
+	createGoalP1();
 }
 
 void myScene::PoyectoIntermedioScene()
@@ -648,17 +668,36 @@ void myScene::createNewBall()
 	PxTransform transform(pos);
 
 	// ---------- OBJETO DINÁMICO ----------
-	mBall = new Ball(gScene,gPhysics,sphereShape,transform,density,staticFriction,dynamicFriction,restitution,color);
+	PxFilterData filter;
+	filter.word0 = BALL;
+	filter.word1 = DEFAULT | GOAL;
+
+	mBall = new Ball(gScene,gPhysics,sphereShape,transform,density,staticFriction,dynamicFriction,restitution,filter,color);
 
 	mBall->getObject()->setMass(500.0f);              // Muy pesada
 	mBall->getObject()->setLinearDamping(0.02f);      // Que ruede bien
 	mBall->getObject()->setAngularDamping(0.05f);
 }
 
+void myScene::createGoalP1()
+{
+
+	PxFilterData filter;
+	filter.word0 = GOAL;
+	filter.word1 = DEFAULT | BALL;
+	g1 = new Goal(gScene, gPhysics, CreateShape(PxBoxGeometry(5, 30, 50)),
+		PxTransform(Vector3(-180, 0, 0)), filter, Vector4(1, 0, 0, 1));
+}
+
 void myScene::resetBall()
 {
-	delete mBall;
+	if (mBall != nullptr) {
+		delete mBall;
+		mBall = nullptr;
+	}
+
 	createNewBall();
+	destroyBall = false;
 }
 
 void myScene::toggleTurbo()
@@ -712,4 +751,10 @@ void myScene::toggleMFG(std::string s)
 {
 	if (mFG.count(s))
 		mFG[s]->setActive(!mFG[s]->getActive());
+}
+
+void myScene::goal()
+{
+	std::cout << "Golaso\n";
+	destroyBall = true;
 }

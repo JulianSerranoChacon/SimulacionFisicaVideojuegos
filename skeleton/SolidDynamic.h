@@ -13,6 +13,9 @@ public:
 	SolidDynamic(PxScene* gScene, PxPhysics* gPhysics, PxShape* shape, PxTransform& transform,double density,
 		double staticFriction, double dynamicFriction, double restitution, Vector4& color = Vector4(1));
 	SolidDynamic(PxScene* gScene, PxPhysics* gPhysics, PxShape* shape, PxTransform& transform, double density,
+		double staticFriction, double dynamicFriction, double restitution,PxFilterData filterdata,
+		Vector4& color = Vector4(1));
+	SolidDynamic(PxScene* gScene, PxPhysics* gPhysics, PxShape* shape, PxTransform& transform, double density,
 		double staticFriction, double dynamicFriction, double restitution, float maxtimeLife, Vector4& color = Vector4(1));
 	~SolidDynamic();
 	bool updateTimeLife(double t);

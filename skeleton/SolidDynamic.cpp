@@ -8,6 +8,14 @@ SolidDynamic::SolidDynamic(PxScene* gScene, PxPhysics* gPhysics, PxShape* shape,
 }
 
 SolidDynamic::SolidDynamic(PxScene* gScene, PxPhysics* gPhysics, PxShape* shape, PxTransform& transform, double density,
+	double staticFriction, double dynamicFriction, double restitution, PxFilterData filterdata, Vector4& color):
+	gPhysics(gPhysics), transform(transform), maxTimeLife(-1)
+{
+	shape->setSimulationFilterData(filterdata);
+	createObj(gScene, shape, transform, density, staticFriction, dynamicFriction, restitution, color);
+}
+
+SolidDynamic::SolidDynamic(PxScene* gScene, PxPhysics* gPhysics, PxShape* shape, PxTransform& transform, double density,
 	double staticFriction, double dynamicFriction, double restitution, float maxtimeLife, Vector4& color):
 	gPhysics(gPhysics), transform(transform), maxTimeLife(maxtimeLife), timeLife(0)
 {

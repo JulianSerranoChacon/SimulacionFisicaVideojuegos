@@ -8,6 +8,7 @@ class SolidStatic
 {
 public:
 	SolidStatic(PxScene* gScene, PxPhysics* gPhysics, PxShape* shape, PxTransform& transform, Vector4& color);
+	SolidStatic(PxScene* gScene, PxPhysics* gPhysics, PxShape* shape, PxTransform& transform,PxFilterData filter,Vector4& color);
 	~SolidStatic();
 
 	inline PxRigidStatic* getObj() { return obj_; }

@@ -14,6 +14,8 @@ class SolidDynamic;
 class SolidSystem;
 class SolidGenerator;
 class Ball;
+class Goal;
+class CollisionManager;
 using namespace physx;
 class myScene
 {
@@ -30,6 +32,7 @@ public:
 	void iniLLuvia();
 	void stopMPSystems(std::string s);
 	void toggleMFG(std::string s);
+	void goal();
 private:
 	void createAxis();
 	void chooseScene(int id);
@@ -47,6 +50,7 @@ private:
 	void PoyectoIntermedioScene();
 	void configureCar();
 	void createNewBall();
+	void createGoalP1();
 	void resetBall();
 	std::vector<RenderItem*> mItems;
 	std::vector<Particle*> mParticles;
@@ -59,4 +63,7 @@ private:
 	Ball* mBall = nullptr;
 	PxScene* gScene = nullptr;
 	PxPhysics* gPhysics = nullptr;
+	Goal* g1 = nullptr;
+	CollisionManager* cM = nullptr;
+	bool destroyBall = false;
 };

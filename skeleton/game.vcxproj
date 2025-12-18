@@ -258,7 +258,9 @@
     <ClCompile Include="BouyancyForceGenerator.cpp" />
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="Car.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="ForceGenerator.cpp" />
+    <ClCompile Include="Goal.cpp" />
     <ClCompile Include="gravityForceGenerator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="myScene.cpp" />
@@ -290,8 +292,11 @@
     <ClInclude Include="BouyancyForceGenerator.h" />
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="Car.h" />
+    <ClInclude Include="Filters.h" />
+    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="core.hpp" />
     <ClInclude Include="ForceGenerator.h" />
+    <ClInclude Include="Goal.h" />
     <ClInclude Include="gravityForceGenerator.h" />
     <ClInclude Include="myScene.h" />
     <ClInclude Include="NormalGenerator.h" />

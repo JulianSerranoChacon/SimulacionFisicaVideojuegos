@@ -35,6 +35,8 @@
     <ClCompile Include="SolidGenerator.cpp" />
     <ClCompile Include="UniformSolidGenerator.cpp" />
     <ClCompile Include="NormalSolidGenerator.cpp" />
+    <ClCompile Include="Goal.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -72,6 +74,9 @@
     <ClInclude Include="SolidGenerator.h" />
     <ClInclude Include="UniformSolidGenerator.h" />
     <ClInclude Include="NormalSolidGenerator.h" />
+    <ClInclude Include="Goal.h" />
+    <ClInclude Include="Filters.h" />
+    <ClInclude Include="CollisionManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

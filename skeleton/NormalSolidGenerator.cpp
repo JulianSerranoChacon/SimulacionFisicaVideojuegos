@@ -67,7 +67,7 @@ void NormalSolidGenerator::generate(double t) {
 
 		
 		double restitutionVar = restitutionR(random);
-		SolidDynamic* s = new SolidDynamic(gScene, gPhysics, shape, PxTransform(genPos + posVar), density, staticFVar, dynamicFVar,
+		SolidDynamic* s = new SolidDynamic(gScene, gPhysics, CreateShape(shape->getGeometry().any()), PxTransform(genPos + posVar), density, staticFVar, dynamicFVar,
 			restitutionVar,timeVar, sV);
 
 		s->getObject()->setLinearVelocity(genVel + velVar);

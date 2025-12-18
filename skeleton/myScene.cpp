@@ -692,12 +692,7 @@ void myScene::createGoalP1()
 
 void myScene::resetBall()
 {
-	if (mBall != nullptr) {
-		delete mBall;
-		mBall = nullptr;
-	}
-
-	createNewBall();
+	mBall->getObject()->setGlobalPose(PxTransform(0, 40, 0));
 	destroyBall = false;
 }
 
@@ -758,6 +753,7 @@ void myScene::goal()
 {
 	destroyBall = true;
 	fuegoG1->setActive(true);
+	hoseG1->setActive(true);
 }
 
 void myScene::createParticleSystemInGame()
@@ -795,8 +791,37 @@ void myScene::createParticleSystemInGame()
 	mPSystems.emplace("fuego", fuegoG1);
 	fuegoG1->setActive(false);
 
-	ParticleSystem* pS = new ParticleSystem();
+	hoseG1 = new SolidSystem();
 
+	NormalSolidGenerator* hose = new NormalSolidGenerator(
+		0.0, 0.0,           // media, desviacion (casi cero para evitar error)
+		gScene,
+		gPhysics,
+		2000,                   // maxParticles
+		0.2,                  // emisionVel
+		Vector3(pos.toVector3() + MVector3(30, 40, 0).toVector3()),    // genPos (boquilla)
+		Vector3(0, 0, 0),       // genPosOffset (sin variacion)
+		Vector3(40, 10, 0),      // genVel (direccion fija)
+		Vector3(0, 0, 0),       // genVelOffset (sin variacion)
+		Vector3(0, 0, 0),       // genAngVel
+		Vector3(0, 0, 0),       // genAngVelOffset
+		0.0, 0.0, 0.05,         // staticFrictionMin, dynamicFrictionMin, restitutionMin
+		0.0, 0.0, 0.05,         // staticFrictionMax, dynamicFrictionMax, restitutionMax
+		1.5, 2.5,               // timeLifeMin, timeLifeMax
+		100.0,                  // maxDistance
+		true,                   // active
+		1000.0f,                // density (agua)
+		CreateShape(PxSphereGeometry(3)),  // shape
+		Vector4(0.4f, 0.6f, 1.0f, 1.0f)                          // color
+	);
+
+
+	hoseG1->addSolidGenerator(hose);
+	mSSystems.emplace("hoseG1", hoseG1);
+	hoseG1->setActive(false);
+
+
+	
 	//EL OTRO SISTEMA DE PARTICULAS REQUERIDO SE INICIA PULSANDO LA L Y SE PUEDE PAUSAR O REANUDAR CON LA K ES EL DE LLUVIA
 	//SE CREA EN INILLUVIA
 }

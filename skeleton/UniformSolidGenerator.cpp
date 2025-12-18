@@ -63,7 +63,7 @@ void UniformSolidGenerator::generate(double t)
 		double restitutionVar = restitutionR(random);
 
 		//ParticleWithMass* p = new ParticleWithMass(genPos + posVar, genVel + velVar, genAccel + accelVar, 0.5, mass, time(random), 0.5, sV);
-		SolidDynamic* s = new SolidDynamic(gScene,gPhysics,shape, PxTransform(genPos + posVar), density,
+		SolidDynamic* s = new SolidDynamic(gScene,gPhysics, CreateShape(shape->getGeometry().any()), PxTransform(genPos + posVar), density,
 			staticFVar, dynamicFVar, restitutionVar,timeVar, sV);
 		s->getObject()->setLinearVelocity(genVel + velVar);
 		s->getObject()->setAngularVelocity(genAngVel + nAngVelVar);

@@ -69,4 +69,5 @@ private:
 	bool destroyBall = false;
 	ParticleSystem* fuegoG1 = nullptr;
 	SolidSystem* mangueraG1 = nullptr;
+	SolidSystem* hoseG1 = nullptr;
 };

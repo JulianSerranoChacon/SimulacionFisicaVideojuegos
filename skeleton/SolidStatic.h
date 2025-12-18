@@ -19,4 +19,3 @@ private:
 	PxTransform transform_;
 	RenderItem* rItem_;
 };
-

@@ -40,6 +40,7 @@ private:
 	void scene6();
 	void scene7();
 	void scene8();
+	void scene9();
 	void gameScene();
 	std::vector<RenderItem*> mItems;
 	std::vector<Particle*> mParticles;

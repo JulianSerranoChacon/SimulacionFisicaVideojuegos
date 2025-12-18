@@ -24,7 +24,7 @@ using namespace physx;
 
 myScene::myScene(PxScene* gScene, PxPhysics* gPhysics): gScene(gScene), gPhysics(gPhysics)
 {
-	chooseScene(8);
+	chooseScene(9);
 	//gameScene();
 }
 
@@ -177,6 +177,9 @@ void myScene::chooseScene(int id)
 		break;
 	case 8:
 		scene8();
+		break;
+	case 9:
+		scene9();
 		break;
 	default:
 		break;
@@ -464,6 +467,38 @@ void myScene::scene8()
 
 
 	mSolSys->addSolidGenerator(rain);
+	mSolSys->addSolidGenerator(hose);
+}
+
+void myScene::scene9()
+{
+	SolidSystem* mSolSys = new SolidSystem;
+	mSSystems.emplace("system", mSolSys);
+	NormalSolidGenerator* hose = new NormalSolidGenerator(
+		0.0, 0.0,           // media, desviacion (casi cero para evitar error)
+		gScene,
+		gPhysics,
+		2000,                   // maxParticles
+		0.2,                  // emisionVel
+		Vector3(0, 1.2f, 0),    // genPos (boquilla)
+		Vector3(0, 0, 0),       // genPosOffset (sin variacion)
+		Vector3(0, 0, 40),      // genVel (direccion fija)
+		Vector3(0, 0, 0),       // genVelOffset (sin variacion)
+		Vector3(0, 0, 0),       // genAngVel
+		Vector3(0, 0, 0),       // genAngVelOffset
+		0.0, 0.0, 0.05,         // staticFrictionMin, dynamicFrictionMin, restitutionMin
+		0.0, 0.0, 0.05,         // staticFrictionMax, dynamicFrictionMax, restitutionMax
+		1.5, 2.5,               // timeLifeMin, timeLifeMax
+		100.0,                  // maxDistance
+		true,                   // active
+		1000.0f,                // density (agua)
+		CreateShape(PxSphereGeometry(3)),  // shape
+		Vector4(0.4f, 0.6f, 1.0f, 1.0f)                          // color
+	);
+
+	WindForceGenerator* wG = new WindForceGenerator(mVector3D(0.0f, 1500.0f, 0.0f), 0.8f);
+	hose->addForceGenerator(wG);
+
 	mSolSys->addSolidGenerator(hose);
 }
 

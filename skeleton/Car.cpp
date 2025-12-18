@@ -37,7 +37,7 @@ void Car::integrate(double t)
         fg->addForce(this);
 
     // Aplicamos movimiento suave basado en inputs acumulados
-    applyMove(moveDir, t);
+    applyMove(moveDir);
 
     // Si quieres frenar lentamente al soltar teclas:
     moveDir *= damping;

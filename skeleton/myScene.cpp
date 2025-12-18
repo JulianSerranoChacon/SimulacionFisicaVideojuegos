@@ -811,12 +811,7 @@ void myScene::createParticleSystemInGame()
 	Vector3D pos(g1->getObj()->getGlobalPose().p.x, g1->getObj()->getGlobalPose().p.y,
 		g1->getObj()->getGlobalPose().p.z);
 
-	WindForceGenerator* wG = new WindForceGenerator(mVector3D(500, 500, 0), 0.8f);
-	VortexForceGenerator* vG = new VortexForceGenerator(mVector3D(30, 30, 30), 30, 10, 30);
-
-	mFG.emplace("viento", wG);
-	mFG.emplace("vortex", vG);
-
+	WindForceGenerator* wG = new WindForceGenerator(mVector3D(0, 5000, 0), 0.8);
 	//fuego
 	NormalGeneratorWithForces* pG = new NormalGeneratorWithForces(
 		300, 0.003,                      // numero particulas, velocidad de emision
@@ -833,8 +828,7 @@ void myScene::createParticleSystemInGame()
 		Vector4(1, 0.5, 0, 1)           // color
 	);
 
-	pG->addForceGenerator(wG);
-	pG->addForceGenerator(vG);
+	//pG->addForceGenerator(wG);
 	fuegoG1->addParticleGen(pG);
 	mPSystems.emplace("fuego", fuegoG1);
 	fuegoG1->setActive(false);
@@ -858,12 +852,13 @@ void myScene::createParticleSystemInGame()
 		1.5, 2.5,               // timeLifeMin, timeLifeMax
 		100.0,                  // maxDistance
 		true,                   // active
-		1000.0f,                // density (agua)
+		10.0f,                // density (agua)
 		CreateShape(PxSphereGeometry(3)),  // shape
 		Vector4(0.4f, 0.6f, 1.0f, 1.0f)                          // color
 	);
 
-
+	hose->addForceGenerator(wG);
+	mFG.emplace("vientoHose", wG);
 	hoseG1->addSolidGenerator(hose);
 	mSSystems.emplace("hoseG1", hoseG1);
 	hoseG1->setActive(false);
